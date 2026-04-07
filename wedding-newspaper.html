@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Clifford & Alyanna — Wedding Newspaper</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:       #0d0d0d;
+    --ink-mid:   #2a2a2a;
+    --ink-light: #555;
+    --ink-faint: #888;
+    --paper:     #f9f7f2;
+    --paper-mid: #f0ede6;
+    --paper-dark:#e8e4db;
+    --grey:      #999;
+    --grey-mid:  #ccc;
+    --rule:      #0d0d0d;
+    --rule-thin: rgba(13,13,13,0.25);
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background: #b0ab9f;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* ── ENVELOPE OVERLAY ── */
+  #envelope-overlay {
+    position: fixed; inset: 0;
+    background: #1a1a1a;
+    z-index: 100000;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+  }
+  #envelope-overlay.hidden { opacity: 0; visibility: hidden; }
+
+  .env-paper-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(255,255,255,0.02) 27px, rgba(255,255,255,0.02) 28px);
+  }
+
+  .newspaper-envelope {
+    position: relative; width: 340px; text-align: center; cursor: pointer;
+    animation: floatIn 1s ease both;
+  }
+  @keyframes floatIn { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+  .ne-masthead {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 1.8rem; color: var(--paper);
+    letter-spacing: .04em; margin-bottom: .3rem;
+    text-shadow: 0 0 30px rgba(255,255,255,0.15);
+  }
+  .ne-dateline {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(249,247,242,0.4); margin-bottom: 1.2rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding: .3rem 0;
+  }
+  .ne-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 900; color: var(--paper);
+    text-transform: uppercase; letter-spacing: .08em;
+    line-height: 1.2; margin-bottom: .5rem;
+  }
+  .ne-subhead {
+    font-family: 'IM Fell English', serif;
+    font-size: .85rem; font-style: italic; color: rgba(249,247,242,0.6);
+    margin-bottom: 1.4rem;
+  }
+  .ne-seal {
+    display: inline-flex; width: 64px; height: 64px;
+    border-radius: 50%; border: 2px solid rgba(255,255,255,0.3);
+    align-items: center; justify-content: center;
+    margin: 0 auto 1.2rem;
+    font-family: 'Playfair Display', serif; font-size: 1.1rem;
+    color: var(--paper); letter-spacing: .04em;
+    background: rgba(255,255,255,0.05);
+    transition: all .3s;
+  }
+  .newspaper-envelope:hover .ne-seal {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.6);
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+  }
+  .ne-cta {
+    font-family: 'Jost', sans-serif; font-size: .68rem;
+    letter-spacing: .3em; text-transform: uppercase;
+    color: rgba(249,247,242,0.35); margin-top: .4rem;
+    animation: pulse 2.2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:.9} }
+
+  /* ── NEWSPAPER WRAPPER ── */
+  .newspaper {
+    max-width: 960px; margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 0 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  .newspaper::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(0,0,0,0.06) 0%, transparent 40%),
+      radial-gradient(ellipse at 100% 0%, rgba(0,0,0,0.04) 0%, transparent 35%),
+      radial-gradient(ellipse at 100% 100%, rgba(0,0,0,0.06) 0%, transparent 40%),
+      radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.04) 0%, transparent 35%);
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    padding: 1.2rem 2rem .8rem;
+    border-bottom: 3px double var(--ink);
+    position: relative;
+  }
+
+  .mast-top-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: .6rem;
+    padding-bottom: .4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mast-tagline { font-style: italic; font-family: 'IM Fell English', serif; font-size: .68rem; color: var(--ink-light); }
+
+  .mast-name-block { text-align: center; padding: .6rem 0 .4rem; }
+  .mast-edition {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .6rem; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: .2rem;
+  }
+  .mast-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    color: var(--ink); line-height: .9;
+  }
+  .mast-subtitle {
+    font-family: 'IM Fell English', serif; font-style: italic;
+    font-size: .9rem; color: var(--ink-light); margin-top: .3rem;
+    letter-spacing: .06em;
+  }
+
+  .mast-bottom-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: .7rem; padding-top: .5rem;
+    border-top: 1px solid var(--rule);
+    font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-light);
+  }
+
+  /* ── RULES ── */
+  .rule-thick { border: none; border-top: 3px solid var(--ink); margin: 0; }
+  .rule-double { border: none; border-top: 3px double var(--ink); }
+  .rule-thin { border: none; border-top: 1px solid var(--ink); }
+  .rule-dashed { border: none; border-top: 1px dashed var(--grey-mid); }
+  .rule-ornate {
+    display: flex; align-items: center; gap: .5rem;
+    margin: .6rem 0;
+  }
+  .rule-ornate::before, .rule-ornate::after {
+    content: ''; flex: 1; height: 1px; background: var(--ink);
+  }
+  .rule-ornate span {
+    font-family: 'Playfair Display', serif; font-size: .7rem; color: var(--ink-light);
+    letter-spacing: .2em; text-transform: uppercase; white-space: nowrap;
+  }
+
+  /* ── HERO STRIP ── */
+  .hero-strip {
+    padding: 0; overflow: hidden;
+    border-bottom: 2px solid var(--ink);
+    display: grid; grid-template-columns: 1fr 2fr 1fr;
+  }
+
+  .hero-side {
+    padding: 1.5rem 1.2rem;
+    border-right: 1px solid var(--ink);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .hero-side:last-child { border-right: none; border-left: 1px solid var(--ink); }
+
+  .hs-label {
+    font-size: .55rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: .3rem;
+  }
+  .hs-value {
+    font-family: 'Playfair Display', serif; font-size: .95rem;
+    font-weight: 700; color: var(--ink); line-height: 1.3;
+  }
+  .hs-note {
+    font-family: 'IM Fell English', serif; font-style: italic;
+    font-size: .78rem; color: var(--ink-light); margin-top: .2rem;
+  }
+
+  .hero-center {
+    position: relative; overflow: hidden; min-height: 320px;
+    display: flex; align-items: flex-end; justify-content: center;
+    background: var(--ink);
+  }
+  .hero-center-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+    opacity: .85; mix-blend-mode: luminosity;
+    filter: contrast(1.1) brightness(.9);
+  }
+  .hero-photo-placeholder {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, #1a1a1a, #3a3a3a);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-photo-placeholder svg { opacity: .12; }
+
+  .hero-caption-band {
+    position: relative; z-index: 2;
+    background: var(--ink); color: var(--paper);
+    width: 100%; padding: .8rem 1.5rem;
+    text-align: center;
+  }
+  .hcb-names {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 900; text-transform: uppercase; letter-spacing: .12em;
+    line-height: 1;
+  }
+  .hcb-tagline {
+    font-family: 'IM Fell English', serif; font-style: italic;
+    font-size: .85rem; color: rgba(249,247,242,0.65); margin-top: .2rem;
+    letter-spacing: .06em;
+  }
+
+  /* ── MAIN HEADLINE SECTION ── */
+  .headline-section {
+    padding: 1.4rem 2rem 1rem;
+    border-bottom: 2px solid var(--ink);
+    text-align: center;
+  }
+  .hl-kicker {
+    font-size: .6rem; letter-spacing: .5em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: .5rem;
+  }
+  .hl-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 900; text-transform: uppercase;
+    letter-spacing: .04em; line-height: 1.05;
+    color: var(--ink);
+  }
+  .hl-sub {
+    font-family: 'IM Fell English', serif; font-style: italic;
+    font-size: 1.05rem; color: var(--ink-light);
+    margin: .4rem 0 .8rem; letter-spacing: .04em;
+  }
+  .hl-byline {
+    font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ── COLUMNS GRID ── */
+  .body-grid {
+    display: grid;
+    grid-template-columns: 1fr 2px 1.5fr 2px 1fr;
+    gap: 0;
+    padding: 0 2rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .col-divider { background: var(--ink); }
+  .col {
+    padding: 1.4rem 1.5rem 1.4rem;
+  }
+  .col:first-child { padding-left: 0; }
+  .col:last-child { padding-right: 0; }
+
+  /* ── ARTICLE TYPOGRAPHY ── */
+  .art-label {
+    font-size: .56rem; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--ink-faint); display: block; margin-bottom: .4rem;
+  }
+  .art-head {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    font-size: 1.25rem; font-weight: 700;
+    line-height: 1.2; color: var(--ink); margin-bottom: .4rem;
+  }
+  .art-head.large { font-size: 1.6rem; }
+  .art-head em { font-style: italic; font-weight: 400; }
+  .art-subhead {
+    font-family: 'IM Fell English', serif; font-style: italic;
+    font-size: .82rem; color: var(--ink-light); margin-bottom: .6rem;
+    line-height: 1.4;
+  }
+  .art-byline {
+    font-size: .6rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-faint); padding-bottom: .5rem; margin-bottom: .7rem;
+    border-bottom: 1px solid var(--ink);
+  }
+  .art-body {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .82rem; line-height: 1.8; color: var(--ink-mid);
+    text-align: justify; hyphens: auto;
+  }
+  .art-body p { margin-bottom: .7rem; }
+  .art-body p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900;
+    float: left; line-height: .78; margin: .08em .1em 0 0;
+    color: var(--ink);
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink);
+    padding: .8rem .5rem; margin: 1rem 0; text-align: center;
+  }
+  .pq-text {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 1rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+  }
+  .pq-attr {
+    font-size: .6rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink-faint); margin-top: .4rem;
+  }
+
+  /* ── PHOTO BLOCK (inline, clickable upload) ── */
+  .photo-block {
+    margin: .8rem 0;
+    border: 1px solid var(--ink);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .photo-block img {
+    width: 100%; display: block;
+    filter: grayscale(90%) contrast(1.08);
+    transition: filter .4s;
+  }
+  .photo-block:hover img { filter: grayscale(30%) contrast(1.05); }
+  .photo-block-placeholder {
+    width: 100%;
+    background: linear-gradient(135deg, #2a2a2a, #3d3d3d);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: .4rem; padding: 1.5rem;
+    min-height: 120px;
+  }
+  .photo-block-placeholder svg { opacity: .25; }
+  .photo-block-placeholder span {
+    font-family: 'Jost', sans-serif; font-size: .58rem;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(249,247,242,0.4);
+  }
+  .photo-block-placeholder::after {
+    content: '+ add photo';
+    font-family: 'Jost', sans-serif; font-size: .58rem;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(249,247,242,0.35);
+    border: 1px solid rgba(249,247,242,0.2);
+    padding: .25rem .6rem;
+    transition: all .25s;
+  }
+  .photo-block:hover .photo-block-placeholder::after {
+    color: rgba(249,247,242,0.7);
+    border-color: rgba(249,247,242,0.5);
+  }
+  .photo-caption {
+    font-size: .62rem; color: var(--ink-faint);
+    font-style: italic; padding: .3rem .5rem;
+    border-top: 1px solid var(--rule-thin);
+    background: var(--paper-mid);
+  }
+
+  /* ── PHOTO CAROUSEL ── */
+  .carousel-wrap {
+    margin-bottom: 1rem;
+    border: 1px solid var(--ink);
+    overflow: hidden;
+    position: relative;
+  }
+  .carousel-label {
+    font-size: .52rem; letter-spacing: .38em; text-transform: uppercase;
+    color: var(--ink-faint); text-align: center;
+    padding: .3rem .5rem;
+    background: var(--paper-mid);
+    border-bottom: 1px solid var(--rule-thin);
+  }
+  .carousel-viewport {
+    position: relative;
+    background: #1a1a1a;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+    height: 100%;
+  }
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .carousel-slide img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(90%) contrast(1.08) brightness(.92);
+    transition: filter .4s, transform .4s;
+    display: block;
+  }
+  .carousel-slide:hover img {
+    filter: grayscale(30%) contrast(1.05) brightness(.98);
+    transform: scale(1.03);
+  }
+  .carousel-slide-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #2a2a2a, #3d3d3d);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: .4rem;
+  }
+  .carousel-slide-placeholder svg { opacity: .18; }
+  .carousel-slide-placeholder span {
+    font-family: 'Jost', sans-serif; font-size: .56rem;
+    letter-spacing: .28em; text-transform: uppercase;
+    color: rgba(249,247,242,0.25);
+  }
+  .carousel-slide:not(.has-photo) .carousel-slide-placeholder::after {
+    content: '+ add photo';
+    font-family: 'Jost', sans-serif; font-size: .58rem;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(249,247,242,0.35);
+    margin-top: .3rem;
+    border: 1px solid rgba(249,247,242,0.2);
+    padding: .25rem .6rem;
+    transition: all .25s;
+  }
+  .carousel-slide:not(.has-photo):hover .carousel-slide-placeholder::after {
+    color: rgba(249,247,242,0.7);
+    border-color: rgba(249,247,242,0.5);
+  }
+  /* Slide number badge */
+  .carousel-num {
+    position: absolute; top: 6px; left: 6px; z-index: 3;
+    font-family: 'Libre Baskerville', serif;
+    font-size: .52rem; color: rgba(249,247,242,0.5);
+    background: rgba(0,0,0,0.45); padding: 1px 5px;
+    letter-spacing: .1em;
+    pointer-events: none;
+  }
+  /* Prev/Next buttons */
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+    width: 30px; height: 30px;
+    background: rgba(13,13,13,0.65);
+    border: 1px solid rgba(249,247,242,0.3);
+    color: rgba(249,247,242,0.8);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .2s;
+    font-size: .9rem; line-height: 1;
+    user-select: none;
+  }
+  .carousel-btn:hover { background: rgba(13,13,13,0.9); color: var(--paper); }
+  .carousel-btn.prev { left: 8px; }
+  .carousel-btn.next { right: 8px; }
+  /* Dots */
+  .carousel-dots {
+    display: flex; justify-content: center; gap: 5px;
+    padding: .45rem .5rem;
+    background: var(--paper-mid);
+    border-top: 1px solid var(--rule-thin);
+  }
+  .carousel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--grey-mid); cursor: pointer;
+    transition: background .25s, transform .25s;
+    border: 1px solid var(--grey);
+  }
+  .carousel-dot.active { background: var(--ink); transform: scale(1.3); }
+  .carousel-caption {
+    font-size: .6rem; color: var(--ink-faint);
+    font-style: italic; text-align: center;
+    padding: .2rem .5rem .35rem;
+    background: var(--paper-mid);
+  }
+  .carousel-input { display: none; }
+
+  /* ── ENTOURAGE LISTING ── */
+  .roster { font-size: .78rem; color: var(--ink-mid); line-height: 2; }
+  .roster-head {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .12em;
+    color: var(--ink); border-bottom: 1px solid var(--ink);
+    padding-bottom: .2rem; margin-bottom: .4rem; display: block;
+  }
+  .roster-name { display: block; padding: .1rem 0; }
+  .roster-name::before { content: '— '; color: var(--ink-faint); }
+
+  /* ── SPONSOR PAIRS TABLE ── */
+  .sponsor-table { width: 100%; border-collapse: collapse; font-size: .75rem; }
+  .sponsor-table th {
+    font-size: .58rem; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 400;
+    padding: .2rem .3rem; border-bottom: 1px solid var(--ink);
+    text-align: left;
+  }
+  .sponsor-table td {
+    padding: .32rem .3rem; border-bottom: 1px solid var(--rule-thin);
+    font-family: 'Libre Baskerville', serif; color: var(--ink-mid);
+    line-height: 1.4;
+  }
+  .sponsor-table tr:hover td { background: var(--paper-dark); }
+
+  /* ── ITINERARY ── */
+  .it-row {
+    display: grid; grid-template-columns: 70px 1fr;
+    gap: .5rem; align-items: baseline;
+    padding: .55rem 0; border-bottom: 1px solid var(--rule-thin);
+  }
+  .it-row:last-child { border-bottom: none; }
+  .it-time {
+    font-size: .62rem; letter-spacing: .08em;
+    color: var(--ink-faint); text-align: right; padding-right: .7rem;
+    border-right: 1px solid var(--ink);
+    font-family: 'Libre Baskerville', serif;
+  }
+  .it-event { font-size: .8rem; color: var(--ink-mid); }
+  .it-event strong { font-family: 'Playfair Display', serif; display: block; font-size: .88rem; color: var(--ink); font-weight: 700; }
+
+  /* ── DRESS CODE BOX ── */
+  .dress-box {
+    border: 2px solid var(--ink); padding: 1rem;
+    text-align: center; margin: .8rem 0;
+    position: relative;
+  }
+  .dress-box::before {
+    content: '✦'; position: absolute; top: -.55rem; left: 50%; transform: translateX(-50%);
+    background: var(--paper); padding: 0 .4rem;
+    font-size: .7rem; color: var(--ink-light);
+  }
+  .db-title {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .12em;
+    font-size: .85rem; margin-bottom: .5rem;
+  }
+  .db-swatches {
+    display: flex; justify-content: center; gap: .6rem; margin: .6rem 0;
+  }
+  .db-swatch {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid var(--grey-mid);
+  }
+  .db-text { font-size: .75rem; color: var(--ink-mid); line-height: 1.7; }
+
+  /* Dress code attire grid */
+  .attire-grid {
+    margin-top: .75rem;
+    border-top: 1px solid var(--rule-thin);
+    padding-top: .65rem;
+  }
+  .attire-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: .4rem;
+    align-items: start;
+    padding: .38rem 0;
+    border-bottom: 1px solid rgba(13,13,13,0.08);
+    text-align: left;
+  }
+  .attire-row:last-child { border-bottom: none; }
+  .attire-role {
+    font-size: .56rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-faint); font-family: 'Jost', sans-serif;
+    padding-top: .08rem; line-height: 1.5;
+  }
+  .attire-desc {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .73rem; color: var(--ink-mid); line-height: 1.55;
+  }
+  .attire-swatch-inline {
+    display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.15); vertical-align: middle;
+    margin-right: 2px; position: relative; top: -1px;
+  }
+
+  /* ── HASHTAG BANNER ── */
+  .hashtag-banner {
+    background: var(--ink); color: var(--paper);
+    padding: 1.2rem 2rem; text-align: center;
+    border-bottom: 3px double var(--ink);
+  }
+  .hb-label {
+    font-size: .6rem; letter-spacing: .4em; text-transform: uppercase;
+    color: rgba(249,247,242,0.45); margin-bottom: .3rem; display: block;
+  }
+  .hb-tag {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: clamp(1.2rem, 3vw, 1.9rem); font-weight: 400;
+    letter-spacing: .04em;
+  }
+  .hb-note {
+    font-size: .7rem; color: rgba(249,247,242,0.5);
+    margin-top: .3rem; letter-spacing: .1em;
+  }
+
+  /* ── COUNTDOWN ── */
+  .countdown-strip {
+    display: flex; justify-content: center; gap: 0;
+    border-top: 1px solid var(--rule-thin);
+    margin-top: .8rem;
+  }
+  .cd-cell {
+    flex: 1; text-align: center;
+    padding: .7rem .4rem; border-right: 1px solid var(--rule-thin);
+  }
+  .cd-cell:last-child { border-right: none; }
+  .cd-num {
+    font-family: 'Playfair Display', serif; font-size: 2rem;
+    font-weight: 900; color: var(--ink); display: block; line-height: 1;
+  }
+  .cd-lbl {
+    font-size: .55rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink-faint); display: block; margin-top: .2rem;
+  }
+
+  /* ── RSVP BOX ── */
+  .rsvp-box {
+    background: var(--ink); color: var(--paper);
+    padding: 1.4rem; text-align: center;
+    margin: .8rem 0; position: relative;
+  }
+  .rsvp-box::after {
+    content: '';
+    position: absolute; inset: 4px; border: 1px solid rgba(249,247,242,0.2);
+    pointer-events: none;
+  }
+  .rb-title {
+    font-family: 'Playfair Display', serif; font-weight: 900;
+    text-transform: uppercase; letter-spacing: .16em;
+    font-size: 1.1rem; margin-bottom: .5rem;
+  }
+  .rb-body { font-size: .78rem; color: rgba(249,247,242,0.65); line-height: 1.7; margin-bottom: .8rem; }
+  .rb-deadline {
+    font-size: .6rem; letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(249,247,242,0.4); margin-bottom: .9rem; display: block;
+  }
+  .rb-btn {
+    display: inline-block; border: 1px solid rgba(249,247,242,0.6);
+    padding: .55rem 1.6rem; text-decoration: none;
+    font-family: 'Jost', sans-serif; font-size: .7rem;
+    font-weight: 400; letter-spacing: .26em; text-transform: uppercase;
+    color: var(--paper); transition: all .25s;
+  }
+  .rb-btn:hover { background: rgba(249,247,242,0.12); }
+
+  /* ── NOTES ITEMS ── */
+  .note-item { padding: .6rem 0; border-bottom: 1px solid var(--rule-thin); }
+  .note-item:last-child { border-bottom: none; }
+  .ni-head {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: .88rem; color: var(--ink); margin-bottom: .2rem;
+  }
+  .ni-text { font-size: .76rem; color: var(--ink-light); line-height: 1.65; }
+
+  /* ── VENUE CARD ── */
+  .venue-card { margin-bottom: 1rem; }
+  .vc-label { font-size: .56rem; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-faint); display: block; margin-bottom: .2rem; }
+  .vc-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: var(--ink); line-height: 1.3; margin-bottom: .2rem; }
+  .vc-addr { font-size: .76rem; color: var(--ink-light); line-height: 1.6; margin-bottom: .4rem; }
+  .vc-link { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+
+  /* ── FAQ ── */
+  .faq-item { border-bottom: 1px solid var(--rule-thin); }
+  .faq-q {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: .88rem; color: var(--ink); padding: .5rem 0;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start;
+    gap: .5rem;
+  }
+  .faq-q:hover { color: var(--ink-light); }
+  .faq-icon { font-size: .9rem; flex-shrink: 0; margin-top: .05rem; transition: transform .3s; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    font-size: .76rem; color: var(--ink-light); line-height: 1.7;
+    max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding-bottom: .6rem; }
+
+  /* ── BOTTOM GRID ── */
+  .bottom-grid {
+    display: grid; grid-template-columns: 1fr 2px 1fr 2px 1fr;
+    padding: 0 2rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  /* ── FOOTER ── */
+  .newspaper-footer {
+    padding: 1rem 2rem;
+    border-top: 3px double var(--ink);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: .5rem;
+  }
+  .nf-copy { font-size: .62rem; color: var(--ink-faint); letter-spacing: .12em; }
+  .nf-mark { font-family: 'UnifrakturMaguntia', cursive; font-size: 1.1rem; color: var(--ink-light); }
+  .nf-love { font-family: 'IM Fell English', serif; font-style: italic; font-size: .78rem; color: var(--ink-faint); }
+
+  /* ── MUSIC PLAYER ── */
+  #music-player {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 1000;
+    display: flex; flex-direction: column; align-items: flex-end; gap: .5rem;
+  }
+  #music-toggle {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--ink); border: 1px solid var(--ink);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35); transition: all .25s;
+  }
+  #music-toggle:hover { background: var(--ink-mid); }
+  #music-toggle svg { width: 18px; height: 18px; fill: var(--paper); }
+  #music-label {
+    background: var(--ink); color: var(--paper);
+    font-family: 'Jost', sans-serif; font-size: .68rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    padding: .28rem .75rem; pointer-events: none;
+    opacity: 0; transform: translateY(4px);
+    transition: opacity .3s, transform .3s;
+    white-space: nowrap;
+  }
+  #music-player:hover #music-label { opacity: 1; transform: translateY(0); }
+  @keyframes spinR { to { transform: rotate(360deg); } }
+  #music-toggle.playing::after {
+    content: ''; position: absolute; inset: 3px; border-radius: 50%;
+    border: 2px solid rgba(249,247,242,0.2); border-top-color: rgba(249,247,242,0.7);
+    animation: spinR 1.4s linear infinite;
+    pointer-events: none;
+  }
+  #music-toggle { position: relative; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 200;
+    width: 100%; max-width: 960px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 48px;
+    background: rgba(249,247,242,0.97);
+    border-bottom: 2px solid var(--ink);
+    backdrop-filter: blur(12px);
+  }
+  .nav-mark { font-family: 'UnifrakturMaguntia', cursive; font-size: 1.1rem; color: var(--ink); }
+  .nav-links { display: flex; gap: 1.2rem; }
+  .nav-links a {
+    font-size: .58rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink-light); text-decoration: none; transition: color .2s;
+    font-family: 'Jost', sans-serif; font-weight: 400;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-rsvp {
+    font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
+    padding: .3rem .9rem; border: 1px solid var(--ink); color: var(--ink);
+    text-decoration: none; transition: all .22s; font-family: 'Jost', sans-serif;
+  }
+  .nav-rsvp:hover { background: var(--ink); color: var(--paper); }
+
+  .hamburger { display: none; flex-direction: column; gap: 4px; background: none; border: none; cursor: pointer; padding: 3px; }
+  .hamburger span { display: block; height: 2px; width: 22px; background: var(--ink); transition: all .3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: .12s; } .d2 { transition-delay: .22s; } .d3 { transition-delay: .32s; }
+
+  /* No extra space utility */
+  .no-gap-bottom { padding-bottom: 0 !important; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 720px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-links.open {
+      display: flex; flex-direction: column; position: fixed;
+      top: 48px; left: 0; right: 0;
+      background: rgba(249,247,242,0.98); border-bottom: 2px solid var(--ink);
+      padding: 1rem 1.5rem 1.5rem; gap: 0; z-index: 199;
+    }
+    .nav-links.open a { padding: .8rem 0; border-bottom: 1px solid var(--rule-thin); }
+
+    .hero-strip { grid-template-columns: 1fr; }
+    .hero-side { display: none; }
+    .hero-side:last-child { display: none; }
+
+    .body-grid { grid-template-columns: 1fr; padding: 0 1rem; }
+    .col-divider { display: none; }
+    .col { padding: 1.2rem 0; border-bottom: 1px solid var(--rule-thin); }
+
+    .bottom-grid { grid-template-columns: 1fr; padding: 0 1rem; }
+    .bottom-grid .col-divider { display: none; }
+
+    .masthead { padding: 1rem 1rem .6rem; }
+    .headline-section { padding: 1.2rem 1rem .8rem; }
+    .hashtag-banner { padding: 1rem 1rem; }
+    .newspaper-footer { padding: .8rem 1rem; flex-direction: column; align-items: center; text-align: center; }
+
+    .art-body p:first-child::first-letter { font-size: 2.8rem; }
+
+    .attire-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ENVELOPE OVERLAY -->
+<div id="envelope-overlay">
+  <div class="env-paper-bg"></div>
+  <div class="newspaper-envelope" id="env-trigger">
+    <div class="ne-masthead">Maligaya Mag-pakailan Man</div>
+    <div class="ne-dateline">Est. 2026 &nbsp;·&nbsp; Batangas City &nbsp;·&nbsp; Issue No. 1</div>
+    <div class="ne-headline">Local Love Story<br>Makes History</div>
+    <div class="ne-subhead">A tale of destiny — Clifford & Alyanna</div>
+    <div class="ne-seal">C&A</div>
+    <div class="ne-cta">Click to Read the Full Story</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-mark">C&A</span>
+  <div class="nav-links" id="navLinks">
+    <a href="#story" onclick="closeMenu()">Our Story</a>
+    <a href="#entourage" onclick="closeMenu()">Entourage</a>
+    <a href="#schedule" onclick="closeMenu()">Schedule</a>
+    <a href="#venue" onclick="closeMenu()">Venue</a>
+    <a href="#notes" onclick="closeMenu()">Notes</a>
+    <a href="#rsvp" onclick="closeMenu()">RSVP</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:.6rem;">
+    <a href="#rsvp" class="nav-rsvp">RSVP</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- NEWSPAPER WRAPPER -->
+<div style="padding-top:48px;">
+<div class="newspaper">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="mast-top-bar">
+      <span>Batangas City, Philippines</span>
+      <span class="mast-tagline">"Dalwang Pusong Pinagtagpo, Isang kwento"</span>
+      <span>Linggo, Mayo 17, 2026</span>
+    </div>
+    <div class="mast-name-block">
+      <div class="mast-edition">Ipinagdiriwang ang Paglalakbay ng</div>
+      <div class="mast-title">Maligaya Mag-Pakailan Man</div>
+      <div class="mast-subtitle">Isang Imbitasyon sa Kasal at Souvenir Program</div>
+    </div>
+    <div class="mast-bottom-bar">
+      <span>Issue No. 1 &nbsp;·&nbsp; Est. 2026</span>
+      <span>Vol. I — Ang Edisyon ng Kasal</span>
+      <span>Naka Limbag sa Pagibig</span>
+    </div>
+  </div>
+
+  <!-- HERO STRIP -->
+  <div class="hero-strip" id="story">
+    <div class="hero-side">
+      <div>
+        <div class="hs-label">Lokasyon ng Kaganapan</div>
+        <div class="hs-value">Madre de Dios Chapel</div>
+        <div class="hs-note">Tagaytay Highlands, Talisay, Batangas</div>
+      </div>
+      <div>
+        <div class="hs-label">Petsa ng Kasal</div>
+        <div class="hs-value">Linggo, Mayo 17, 2026</div>
+        <div class="hs-note">I-save ang Petsa</div>
+      </div>
+      <div>
+        <div class="hs-label">Oras ng Seremonya</div>
+        <div class="hs-value">Alas tres ng hapon</div>
+        <div class="hs-note">Mga Bisita: Dumating ng 2:30 PM</div>
+      </div>
+    </div>
+
+    <div class="hero-center">
+      <div class="hero-photo-placeholder">
+        <svg width="80" height="80" fill="none" stroke="white" stroke-width="1" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="hero-caption-band">
+        <div class="hcb-names">Clifford &amp; Alyanna</div>
+        <div class="hcb-tagline">You're Invited to A Love Story for the Ages</div>
+      </div>
+    </div>
+
+    <div class="hero-side">
+      <div>
+        <div class="hs-label">Wedding Hashtag</div>
+        <div class="hs-value" style="font-size:.82rem;">#FordtheoneforYanna</div>
+        <div class="hs-note">Tag your photos with us</div>
+      </div>
+      <div>
+        <div class="hs-label">RSVP Deadline</div>
+        <div class="hs-value">Abril 25, 2026</div>
+        <div class="hs-note">Strictly +1</div>
+      </div>
+      <div>
+        <div class="hs-label">Reception Dinner</div>
+        <div class="hs-value">Midlands Veranda sa Tagaytay Highlands</div>
+        <div class="hs-note">6:00 pm ng Gabi</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN HEADLINE -->
+  <div class="headline-section reveal">
+    <div class="hl-kicker">Exclusive Announcement — Issue No. 1</div>
+    <div class="hl-main">Local Love Story Makes History!</div>
+    <div class="hl-sub">After seven extraordinary years, Clifford & Alyanna invite you to witness their forever</div>
+    <div class="hl-byline">By the Couple themselves &nbsp;·&nbsp; Photography by the family &nbsp;·&nbsp; Mayo 17, 2026</div>
+  </div>
+
+  <!-- BODY 3-COL -->
+  <div class="body-grid">
+
+    <!-- COL 1: STORY -->
+    <div class="col reveal" style="padding-bottom:0;">
+      <span class="art-label">How It All Began</span>
+      <h2 class="art-head">A Tale<br><em>of Destiny</em></h2>
+      <div class="art-byline">By Alyanna &nbsp;·&nbsp; Batangas City</div>
+      <div class="art-body">
+        <p>It all began in Uptown back in 2018, where two ordinary days turned into something extraordinary. We were both just working then — two unsuspecting souls — not knowing that we were about to build a lifetime together.</p>
+        <p>A year later, our love blossomed into something even more beautiful as we welcomed our firstborn, baby boy Jaykkylle — our greatest blessing and the tender beginning of our little family.</p>
+      </div>
+
+      <div class="pull-quote">
+        <div class="pq-text">"Two hearts, one story, a thousand moments"</div>
+        <div class="pq-attr">— Clifford</div>
+      </div>
+
+      <div class="art-body">
+        <p>Five years after, our hearts expanded once more with the arrival of our baby girl, Quinn — completing the love we never knew we needed.</p>
+        <p>Through the years, we have faced life hand in hand, growing, learning, and choosing each other every single day.</p>
+      </div>
+
+      <hr class="rule-thin" style="margin:.8rem 0;">
+
+      <span class="art-label" style="margin-top:.6rem;display:block;">Kilalanin ang magkasintahan</span>
+      <div style="margin-top:.5rem;">
+        <div style="margin-bottom:.8rem;">
+          <div class="hs-label" style="font-size:.58rem;">Ang Nobya</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;">Maria Alyanna Hope C. Bumolo</div>
+          <div style="font-size:.73rem;color:var(--ink-light);line-height:1.7;">
+            Anak nina Vice Mayor Alberto D. Bumolo Jr.<br>& Dr. Mary Hope C. Bumolo
+          </div>
+        </div>
+        <hr class="rule-thin">
+        <div style="margin-top:.8rem;">
+          <div class="hs-label" style="font-size:.58rem;">Ang Nobyo</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;">Edwin Clifford F. Tito</div>
+          <div style="font-size:.73rem;color:var(--ink-light);line-height:1.7;">
+            Anak nina Mr. Edgardo M. Tito & Mrs. Lorna F. Tito
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-divider"></div>
+
+    <!-- COL 2: CENTER — CAROUSEL + COUNTDOWN + ITINERARY + DRESS CODE -->
+    <div class="col reveal d1" style="padding-bottom:0;">
+
+      <!-- ══ PHOTO CAROUSEL ══ -->
+      <span class="art-label">Captured Moments</span>
+      <h2 class="art-head" style="margin-bottom:.6rem;">Our <em>Story in Photos</em></h2>
+
+      <div class="carousel-wrap">
+        <div class="carousel-label">Clifford &amp; Alyanna · A Love Story in Eight Frames</div>
+        <div class="carousel-viewport" id="carouselViewport">
+          <div class="carousel-track" id="carouselTrack">
+
+            <!-- Slide 1 -->
+            <div class="carousel-slide" id="cslide-1" onclick="triggerCarouselUpload(1)">
+              <div class="carousel-slide-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>photo 1</span>
+              </div>
+              <span class="carousel-num">01</span>
+              <input type="file" accept="image/*" class="carousel-input" id="cupload-1" onchange="loadCarouselPhoto(1, this)">
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-slide" id="cslide-2" onclick="triggerCarouselUpload(2)">
+              <div class="carousel-slide-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>photo 2</span>
+              </div>
+              <span class="carousel-num">02</span>
+              <input type="file" accept="image/*" class="carousel-input" id="cupload-2" onchange="loadCarouselPhoto(2, this)">
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-slide" id="cslide-3" onclick="triggerCarouselUpload(3)">
+              <div class="carousel-slide-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>photo 3</span>
+              </div>
+              <span class="carousel-num">03</span>
+              <input type="file" accept="image/*" class="carousel-input" id="cupload-3" onchange="loadCarouselPhoto(3, this)">
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="carousel-slide" id="cslide-4" onclick="triggerCarouselUpload(4)">
+              <div class="carousel-slide-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>photo 4</span>
+              </div>
+              <span class="carousel-num">04</span>
+              <input type="file" accept="image/*" class="carousel-input" id="cupload-4" onchange="loadCarouselPhoto(4, this)">
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="carousel-slide" id="cslide-5" onclick="triggerCarouselUpload(5)">
+              <div class="carousel-slide-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>photo 5</span>
+              </div>
+              <span class="carousel-num">05</span>
+              <input type="file" accept="image/*" class="carousel-input" id="cupload-5" onchange="loadCarouselPhoto(5, this)">
+            </div>
+
+            <!-- Slide 6 -->
+            <div class="carousel-slide" id="cslide-6" onclick="triggerCarouselUpload(6)">
+              <div class="carousel-slide-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>photo 6</span>
+              </div>
+              <span class="carousel-num">06</span>
+              <input type="file" accept="image/*" class="carousel-input" id="cupload-6" onchange="loadCarouselPhoto(6, this)">
+            </div>
+
+            <!-- Slide 7 -->
+            <div class="carousel-slide" id="cslide-7" onclick="triggerCarouselUpload(7)">
+              <div class="carousel-slide-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>photo 7</span>
+              </div>
+              <span class="carousel-num">07</span>
+              <input type="file" accept="image/*" class="carousel-input" id="cupload-7" onchange="loadCarouselPhoto(7, this)">
+            </div>
+
+            <!-- Slide 8 -->
+            <div class="carousel-slide" id="cslide-8" onclick="triggerCarouselUpload(8)">
+              <div class="carousel-slide-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>photo 8</span>
+              </div>
+              <span class="carousel-num">08</span>
+              <input type="file" accept="image/*" class="carousel-input" id="cupload-8" onchange="loadCarouselPhoto(8, this)">
+            </div>
+
+          </div><!-- end track -->
+
+          <button class="carousel-btn prev" onclick="carouselMove(-1)">&#8249;</button>
+          <button class="carousel-btn next" onclick="carouselMove(1)">&#8250;</button>
+        </div><!-- end viewport -->
+
+        <div class="carousel-dots" id="carouselDots">
+          <div class="carousel-dot active" onclick="carouselGoTo(0)"></div>
+          <div class="carousel-dot" onclick="carouselGoTo(1)"></div>
+          <div class="carousel-dot" onclick="carouselGoTo(2)"></div>
+          <div class="carousel-dot" onclick="carouselGoTo(3)"></div>
+          <div class="carousel-dot" onclick="carouselGoTo(4)"></div>
+          <div class="carousel-dot" onclick="carouselGoTo(5)"></div>
+          <div class="carousel-dot" onclick="carouselGoTo(6)"></div>
+          <div class="carousel-dot" onclick="carouselGoTo(7)"></div>
+        </div>
+        <div class="carousel-caption">Click any frame to add your photo · Engagement &amp; Family shots welcome</div>
+      </div>
+
+      <!-- COUNTDOWN -->
+      <span class="art-label">Counting Down</span>
+      <h2 class="art-head large">The Wedding <em>Itinerary</em></h2>
+      <div class="art-byline">What to Expect on the Big Day</div>
+
+      <div class="countdown-strip" style="margin-bottom:1rem;">
+        <div class="cd-cell"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Days</span></div>
+        <div class="cd-cell"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Hours</span></div>
+        <div class="cd-cell"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Mins</span></div>
+        <div class="cd-cell"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">Secs</span></div>
+      </div>
+
+      <div class="rule-ornate"><span>Programme</span></div>
+
+      <div class="itinerary" id="schedule">
+        <div class="it-row">
+          <div class="it-time">2:30 PM</div>
+          <div class="it-event"><strong>Pagdating ng mga Panauhin</strong>Doors open. Guests welcomed and seated.</div>
+        </div>
+        <div class="it-row">
+          <div class="it-time">3:00 PM</div>
+          <div class="it-event"><strong>Seremonya ng Kasal</strong>Madre de Dios Chapel, Tagaytay Highlands. Please silence phones.</div>
+        </div>
+        <div class="it-row">
+          <div class="it-time">5:00 PM</div>
+          <div class="it-event"><strong>Munting Salu-Salo</strong>Celebrate and create new memories with the couple.</div>
+        </div>
+        <div class="it-row">
+          <div class="it-time">6:00 PM</div>
+          <div class="it-event"><strong>Resepsyon at Pagdiriwang</strong>Midlands Veranda, Tagaytay Highlands. Food, music, dancing!</div>
+        </div>
+      </div>
+
+      <hr class="rule-thin" style="margin:.9rem 0;">
+
+      <!-- DRESS CODE -->
+      <div class="dress-box" id="color-motif">
+        <div class="db-title">Timeless Filipiñana</div>
+        <div class="art-byline" style="border:none;padding:0;margin-bottom:.5rem;">Our Color Palette</div>
+        <div class="db-swatches">
+          <div class="db-swatch" style="background:#F7E7CE;" title="Champagne"></div>
+          <div class="db-swatch" style="background:#800020;" title="Burgundy"></div>
+          <div class="db-swatch" style="background:#ede8d0;" title="Light Beige"></div>
+          <div class="db-swatch" style="background:#D9BB9B;" title="Dark Beige"></div>
+          <div class="db-swatch" style="background:#e5d1b8;" title="Sand Beige"></div>
+        </div>
+        <div class="db-text">
+          Champagne &nbsp;·&nbsp; Burgundy &nbsp;·&nbsp; Light Beige &nbsp;·&nbsp; Dark Beige &nbsp;·&nbsp; Sand Beige
+        </div>
+        <div class="attire-grid">
+          <div class="attire-row">
+            <div class="attire-role">Ninong</div>
+            <div class="attire-desc">Long Barong, itim na pantalon at itim na sapatos</div>
+          </div>
+          <div class="attire-row">
+            <div class="attire-role">Ninang</div>
+            <div class="attire-desc">Modern Filipiñana sa kulay <span class="attire-swatch-inline" style="background:#F7E7CE;"></span><em>Champagne</em></div>
+          </div>
+          <div class="attire-row">
+            <div class="attire-role">Mga Abay ng Nobya</div>
+            <div class="attire-desc">Filipiñana sa kulay <span class="attire-swatch-inline" style="background:#800020;"></span><em>Burgundy</em></div>
+          </div>
+          <div class="attire-row">
+            <div class="attire-role">Mga Abay ng Nobyo</div>
+            <div class="attire-desc">Long Barong, itim na pantalon at itim na sapatos</div>
+          </div>
+          <div class="attire-row">
+            <div class="attire-role">Mga Panauhin</div>
+            <div class="attire-desc">
+              <span style="display:block;">Kababaihan: Filipiñana sa kulay <span class="attire-swatch-inline" style="background:#e5d1b8;border-color:#c2a882;"></span><em>Beige</em></span>
+              <span style="display:block;">Kalalakihan: Barong, itim na pantalon at sapatos</span>
+            </div>
+          </div>
+          <div class="attire-row" style="border-bottom:none;">
+            <div class="attire-role" style="color:#800020;font-weight:600;">Iwasan</div>
+            <div class="attire-desc" style="color:var(--ink-faint);font-size:.68rem;">Puti, Off-White, Ivory at matingkad na kulay o prints</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-divider"></div>
+
+    <!-- COL 3: ENTOURAGE + NOTES + PHOTO -->
+    <div class="col reveal d2" id="entourage" style="padding-bottom:0;">
+      <span class="art-label">May pagmamahal at suporta</span>
+      <h2 class="art-head">Kilalanin ang mga <em>Bituin ng Palabas</em></h2>
+      <div class="art-byline">The Wedding Entourage</div>
+
+      <div style="margin-bottom:.8rem;">
+        <span class="hs-label" style="font-size:.58rem;display:block;margin-bottom:.2rem;">Punong abay ng Nobyo</span>
+        <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;">Mr. Edrian Clinton F. Tito</div>
+      </div>
+      <hr class="rule-thin">
+      <div style="margin:.6rem 0 .8rem;">
+        <span class="hs-label" style="font-size:.58rem;display:block;margin-bottom:.2rem;">Punong Abay ng Nobya</span>
+        <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;">Ms. Eda Marie A. Santos</div>
+      </div>
+      <hr class="rule-thin">
+
+      <!-- Entourage table styled like ninong/ninang table -->
+      <div style="margin:.8rem 0;">
+        <table class="sponsor-table">
+          <thead>
+            <tr><th>Abay ng Nobyo</th><th>Abay ng Nobya</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Atty. Aldrine Llyod C. Bumolo</td>
+              <td>Dr. Maria Alyzza Joy C. Bumolo</td>
+            </tr>
+            <tr>
+              <td>Mr. Leo Angelo M. Pagtalunan</td>
+              <td>Kathleen May V. Corpuz</td>
+            </tr>
+            <tr>
+              <td>Mr. Nick Vergilio C. Tiam</td>
+              <td>Dr. Nyche Dace D. Hung</td>
+            </tr>
+            <tr>
+              <td>Dr. Gio B. Francisco</td>
+              <td>Dr. Tarrah Akeem B. Baluso</td>
+            </tr>
+            <tr>
+              <td>Dr. Paolo Enrique S. Divinagracia</td>
+              <td>Mr. Mark Anthony Raymundo</td>
+            </tr>
+            <tr>
+              <td>Mr. Louie John C. Ruben</td>
+              <td>Dr. Ma. Regina Luz Danguilan</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="rule-thin" style="margin:.6rem 0;">
+
+      <span class="art-label" style="display:block;margin-bottom:.5rem;">Notes & Reminders</span>
+      <div id="notes">
+        <div class="note-item">
+          <div class="ni-head">Gift Guide</div>
+          <div class="ni-text">Your presence and prayers are all we request. Monetary gifts are also warmly welcome.</div>
+        </div>
+        <div class="note-item">
+          <div class="ni-head">Unplugged Ceremony</div>
+          <div class="ni-text">Kindly keep phones away during the ceremony. Our photographers will capture every moment.</div>
+        </div>
+        <div class="note-item">
+          <div class="ni-head">Please Be On Time</div>
+          <div class="ni-text">The ceremony begins at 3:00 PM sharp. Arrive at least 30 minutes early.</div>
+        </div>
+        <div class="note-item" style="border-bottom:none;">
+          <div class="ni-head">Adults-Only Reception</div>
+          <div class="ni-text">We kindly request the reception be an adults-only event so all may fully relax and celebrate.</div>
+        </div>
+      </div>
+
+      <!-- Photo below Adults-Only -->
+      <div class="photo-block" onclick="triggerBlockUpload('block-col3')" style="margin-top:.6rem;margin-bottom:0;">
+        <div class="photo-block-placeholder" id="block-col3-ph">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>add photo</span>
+        </div>
+        <input type="file" accept="image/*" id="block-col3-input" style="display:none" onchange="loadBlockPhoto('block-col3', this)">
+      </div>
+    </div>
+  </div>
+
+  <!-- HASHTAG BANNER -->
+  <div class="hashtag-banner reveal">
+    <span class="hb-label">Our Wedding Hashtag</span>
+    <div class="hb-tag">#FordtheoneforYanna</div>
+    <div class="hb-note">Tag your photos so we can see every beautiful moment! 📸</div>
+  </div>
+
+  <!-- BOTTOM 3-COL -->
+  <!-- ORDER: Final Announcement | Venue+FAQ+RSVP | Sponsors -->
+  <div class="bottom-grid" id="sponsors">
+
+    <!-- COL 1: FINAL ANNOUNCEMENT + FUN FACTS + PHOTO -->
+    <div class="col reveal" style="padding-bottom:0;">
+      <span class="art-label">A Message from the Couple</span>
+      <h2 class="art-head">Final Announcement &amp; <em>Thank You</em></h2>
+      <div class="art-byline">With deepest gratitude</div>
+      <div class="art-body">
+        <p>We can't wait to celebrate this special day with you. Thank you for traveling near or far to be part of our story. Your love and support have meant the world to us, and we promise a night filled with laughter, joy, and unforgettable memories.</p>
+        <p>After seven wonderful years of choosing each other every day, we are so ready to say "I do" in front of the people who matter most to us — you.</p>
+      </div>
+
+      <div class="pull-quote" style="margin:.8rem 0;">
+        <div class="pq-text">"And of course, I said yes — to a lifetime of love, laughter, and everything in between."</div>
+        <div class="pq-attr">— Alyanna</div>
+      </div>
+
+      <div class="art-body">
+        <p>After the ceremony, join us for an evening of celebration at the reception. Come hungry, come happy, and come ready to dance!</p>
+      </div>
+
+      <hr class="rule-thin" style="margin:.8rem 0;">
+
+      <div style="text-align:center;padding:.6rem 0;">
+        <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.8rem;color:var(--ink);margin-bottom:.3rem;">C &amp; A</div>
+        <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--ink-light);">Clifford & Alyanna</div>
+        <div style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-top:.3rem;">Mayo 17, 2026 · Batangas City</div>
+      </div>
+
+      <div class="rule-ornate"><span>Fun Facts</span></div>
+      <div style="font-size:.76rem;color:var(--ink-mid);line-height:1.8;">
+        <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
+          <span>Years together</span><span style="font-family:'Playfair Display',serif;font-weight:700;">7 Years</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
+          <span>Children</span><span style="font-family:'Playfair Display',serif;font-weight:700;">2 Blessings</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
+          <span>Principal Sponsors</span><span style="font-family:'Playfair Display',serif;font-weight:700;">11 Pairs</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
+          <span>Where they met</span><span style="font-family:'Playfair Display',serif;font-weight:700;">Uptown, 2018</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
+          <span>Proposed</span><span style="font-family:'Playfair Display',serif;font-weight:700;">January 2025</span>
+        </div>
+      </div>
+
+      <!-- Photo below fun facts -->
+      <div class="photo-block" onclick="triggerBlockUpload('block-bottom1')" style="margin-top:.8rem;margin-bottom:0;">
+        <div class="photo-block-placeholder" id="block-bottom1-ph">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>add photo</span>
+        </div>
+        <input type="file" accept="image/*" id="block-bottom1-input" style="display:none" onchange="loadBlockPhoto('block-bottom1', this)">
+      </div>
+    </div>
+
+    <div class="col-divider"></div>
+
+    <!-- COL 2: VENUE + FAQ + RSVP -->
+    <div class="col reveal d1" id="venue">
+      <span class="art-label">Saan Kami Matatagpuan</span>
+      <h2 class="art-head">Pasilidad ng &amp; <em>Venue</em></h2>
+      <div class="art-byline">Lahat ng Kailangang Detalye</div>
+
+      <div class="venue-card" style="margin-top:.6rem;">
+        <span class="vc-label">Seremonya ng Kasal</span>
+        <div class="vc-name">Madre De Dios Chapel</div>
+        <div class="vc-addr">Tagaytay Highlands<br>Talisay<br>Batangas City, Philippines<br>Linggo, Mayo 17, 2026 · 3:00 PM</div>
+        <a href="https://maps.app.goo.gl/R6gUP7w9fUWoqxZq5" target="_blank" class="vc-link">Get Directions ↗</a>
+      </div>
+
+      <hr class="rule-dashed" style="margin:.8rem 0;">
+
+      <div class="venue-card">
+        <span class="vc-label">Resepsyon ng Pagdiriwang</span>
+        <div class="vc-name">Midlands Veranda</div>
+        <div class="vc-addr">Tagaytay Highlands, Batangas City, Philippines<br>Matapos ang Munting Salu-Salo · 6:00 PM</div>
+        <a href="https://maps.app.goo.gl/WJ2J3KYAWWjSEA4R6" target="_blank" class="vc-link">Get Directions ↗</a>
+      </div>
+
+      <hr class="rule-thin" style="margin:.8rem 0;">
+
+      <span class="art-label" style="display:block;margin-bottom:.5rem;">Frequently Asked Questions</span>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>Is the event kid-friendly?</span><span class="faq-icon">+</span></div>
+          <div class="faq-a">We kindly request that the reception be an adults-only event. We appreciate your understanding.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>Is parking available?</span><span class="faq-icon">+</span></div>
+          <div class="faq-a">Yes, parking is available at both venues. Carpooling with fellow guests is encouraged.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>What time should I arrive?</span><span class="faq-icon">+</span></div>
+          <div class="faq-a">Please arrive by 2:30 PM to be comfortably seated before the ceremony begins.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)"><span>Can I post on social media?</span><span class="faq-icon">+</span></div>
+          <div class="faq-a">Absolutely! After the ceremony, share using #FordtheoneforYanna so we can find your shots!</div>
+        </div>
+      </div>
+
+      <div class="rsvp-box" id="rsvp" style="margin-top:1rem;">
+        <div class="rb-title">Will You Join Us?</div>
+        <div class="rb-body">We would be truly honoured to have you celebrate this special day. Kindly let us know if you'll be attending.</div>
+        <span class="rb-deadline">Respond by Abril 25, 2026 · Strictly +1</span>
+        <a href="https://forms.gle/im9zWVK9ULDw9qgq6" target="_blank" rel="noopener" class="rb-btn">RSVP Now ↗</a>
+      </div>
+    </div>
+
+    <div class="col-divider"></div>
+
+    <!-- COL 3: SPONSORS (right column) -->
+    <div class="col reveal d2" style="padding-bottom:0;">
+      <span class="art-label">May Buong pagmamahal at gabay</span>
+      <h2 class="art-head">Mga Taga Pagpatunay <em>ng Kasal</em></h2>
+      <div class="art-byline">Ninong & Ninang</div>
+
+      <table class="sponsor-table">
+        <thead><tr><th>Ninong</th><th>Ninang</th></tr></thead>
+        <tbody>
+          <tr><td>Dr. Renato Allas</td><td>Dr. Agustina T. Allas</td></tr>
+          <tr><td>Mr. Cenon Asuncion</td><td>Mrs. Mary Gay T. Asuncion</td></tr>
+          <tr><td>Mr. Manuel Tamayo</td><td>Mrs. Narissa P. Tamayo</td></tr>
+          <tr><td>Cong. Atty. Timothy Cayton</td><td>Mrs. Andrea B. Alfaro</td></tr>
+          <tr><td>Governor Jose V. Gambito</td><td>Councilor Doris B. Binwag</td></tr>
+          <tr><td>Mayor Atty. Philip A. Dacayo</td><td>Mrs. Gloria T. DeGuzman</td></tr>
+          <tr><td>Mr. Rolando A. Fariñas</td><td>Mrs. Amy Padilla</td></tr>
+          <tr><td>Mr. Carlos D. Luglug</td><td>Mrs. Sylvia A. Bernardo</td></tr>
+        </tbody>
+      </table>
+
+      <hr class="rule-thin" style="margin:.8rem 0;">
+      <span class="art-label" style="display:block;margin-bottom:.5rem;">Secondary Sponsors</span>
+
+      <div class="roster" style="font-size:.75rem;">
+        <span class="roster-head">Tagapag Dala ng Singsing</span>
+        <span class="roster-name" style="font-size:.78rem;">Matteo Makisig B. Tito</span>
+        <span class="roster-name" style="font-size:.78rem;">Kaizen Christopher R. Tito</span>
+
+        <span class="roster-head" style="margin-top:.5rem;">Tagapagdala ng Bibliya</span>
+        <span class="roster-name" style="font-size:.78rem;">Sebastian Adriane A. Bumolo</span>
+
+        <span class="roster-head" style="margin-top:.5rem;">Mga Tagapagdala ng Bulaklak</span>
+        <span class="roster-name" style="font-size:.78rem;">Shirina Albertha R. Bumolo</span>
+        <span class="roster-name" style="font-size:.78rem;">Ma. Athalia Ysabel P. Corpuz</span>
+        <span class="roster-name" style="font-size:.78rem;">Carmela Ysabelle B. Almuete</span>
+
+        <span class="roster-head" style="margin-top:.5rem;">Tagapagdala ng Arras</span>
+        <span class="roster-name" style="font-size:.78rem;">Gabriel Alberto R. Bumolo</span>
+
+        <span class="roster-head" style="margin-top:.5rem;">Mga Tagapagdala ng Belo</span>
+        <span class="roster-name" style="font-size:.78rem;">Ms. Kathleen May V. Corpuz at Mr. Clinton Albert C. Bumolo</span>
+
+        <span class="roster-head" style="margin-top:.5rem;">Mga Tagapagdala ng Kandila</span>
+        <span class="roster-name" style="font-size:.78rem;">Dr. Maria Alyzza Joy C. Bumolo at Mr. Justin Inno V. Corpuz</span>
+
+        <span class="roster-head" style="margin-top:.5rem;">Mga Tagapagdala ng Yugal</span>
+        <span class="roster-name" style="font-size:.78rem;">Atty. Aldrine Llyod C. Bumolo at Ms. Mabelle B. Morales</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="newspaper-footer">
+    <span class="nf-copy">Issue No. 1 · Maligaya Magpakailan Man · Est. 2026</span>
+    <span class="nf-mark">C&A</span>
+    <span class="nf-love">Made with love ♥ · We can't wait to celebrate with you</span>
+  </div>
+
+</div><!-- end .newspaper -->
+</div><!-- end padding-top -->
+
+<!-- MUSIC PLAYER -->
+<div id="music-player">
+  <span id="music-label">♪ Panalangin — APO Hiking Society</span>
+  <button id="music-toggle" aria-label="Toggle music">
+    <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5.14v14l11-7-11-7z"/></svg>
+    <svg id="icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+</div>
+
+<audio id="bg-music" loop preload="auto">
+  <source src="" type="audio/mpeg">
+</audio>
+
+<script>
+  // NAV
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+
+  // COUNTDOWN — target: May 17, 2026 3:00 PM (Philippine Time = UTC+8)
+  const WEDDING = new Date('2026-05-17T15:00:00+08:00');
+  function tick() {
+    const diff = WEDDING - new Date();
+    if (diff <= 0) {
+      document.querySelector('.countdown-strip').innerHTML =
+        '<p style="font-family:Playfair Display,serif;font-style:italic;font-size:1.1rem;color:var(--ink);padding:.6rem 1rem;text-align:center;width:100%;">Today is the day! 🥂</p>';
+      return;
+    }
+    const pad = n => String(Math.floor(n)).padStart(2,'0');
+    document.getElementById('cd-d').textContent = pad(diff/86400000);
+    document.getElementById('cd-h').textContent = pad((diff%86400000)/3600000);
+    document.getElementById('cd-m').textContent = pad((diff%3600000)/60000);
+    document.getElementById('cd-s').textContent = pad((diff%60000)/1000);
+  }
+  tick(); setInterval(tick, 1000);
+
+  // SCROLL REVEAL
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+  }), {threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // MUSIC
+  const audio = document.getElementById('bg-music');
+  const btn = document.getElementById('music-toggle');
+  const iPlay = document.getElementById('icon-play');
+  const iPause = document.getElementById('icon-pause');
+  let started = false;
+
+  function setPlay(p) {
+    iPlay.style.display = p ? 'none' : '';
+    iPause.style.display = p ? '' : 'none';
+    p ? btn.classList.add('playing') : btn.classList.remove('playing');
+  }
+  btn.addEventListener('click', () => {
+    if(audio.paused) { audio.volume=.45; audio.play().then(()=>setPlay(true)).catch(()=>{}); }
+    else { audio.pause(); setPlay(false); }
+    started = true;
+  });
+  function tryAuto() {
+    if(started) return; audio.volume=.45;
+    audio.play().then(()=>{setPlay(true);started=true;}).catch(()=>{});
+  }
+  document.addEventListener('click', tryAuto, {once:true});
+  document.addEventListener('scroll', tryAuto, {once:true});
+  document.addEventListener('touchstart', tryAuto, {once:true});
+
+  // FAQ
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if(!open) item.classList.add('open');
+  }
+
+  // ── CAROUSEL ──
+  let carouselIndex = 0;
+  const TOTAL_SLIDES = 8;
+  let carouselAutoTimer = null;
+
+  function carouselUpdateUI() {
+    document.getElementById('carouselTrack').style.transform = `translateX(-${carouselIndex * 100}%)`;
+    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === carouselIndex);
+    });
+  }
+
+  function carouselMove(dir) {
+    carouselIndex = (carouselIndex + dir + TOTAL_SLIDES) % TOTAL_SLIDES;
+    carouselUpdateUI();
+    resetCarouselAuto();
+  }
+
+  function carouselGoTo(idx) {
+    carouselIndex = idx;
+    carouselUpdateUI();
+    resetCarouselAuto();
+  }
+
+  function resetCarouselAuto() {
+    if (carouselAutoTimer) clearInterval(carouselAutoTimer);
+    carouselAutoTimer = setInterval(() => carouselMove(1), 4000);
+  }
+
+  // Start auto-play
+  carouselAutoTimer = setInterval(() => carouselMove(1), 4000);
+
+  // Touch/swipe support for carousel
+  let cTouchStartX = 0;
+  const cViewport = document.getElementById('carouselViewport');
+  cViewport.addEventListener('touchstart', e => { cTouchStartX = e.touches[0].clientX; }, {passive:true});
+  cViewport.addEventListener('touchend', e => {
+    const diff = cTouchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) carouselMove(diff > 0 ? 1 : -1);
+  }, {passive:true});
+
+  function triggerCarouselUpload(n) {
+    document.getElementById('cupload-' + n).click();
+  }
+
+  function loadCarouselPhoto(n, input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const slide = document.getElementById('cslide-' + n);
+      const ph = slide.querySelector('.carousel-slide-placeholder');
+      if (ph) ph.remove();
+      let img = slide.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        slide.insertBefore(img, slide.querySelector('.carousel-num'));
+      }
+      img.src = e.target.result;
+      img.alt = 'Photo ' + n;
+      slide.classList.add('has-photo');
+      // Navigate to the uploaded slide
+      carouselGoTo(n - 1);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── INLINE PHOTO BLOCKS ──
+  function triggerBlockUpload(id) {
+    document.getElementById(id + '-input').click();
+  }
+
+  function loadBlockPhoto(id, input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const block = document.getElementById(id + '-ph').closest('.photo-block');
+      const ph = block.querySelector('.photo-block-placeholder');
+      if (ph) ph.remove();
+      let img = block.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        block.insertBefore(img, block.firstChild);
+      }
+      img.src = e.target.result;
+      img.alt = 'Photo';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ENVELOPE
+  document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('envelope-overlay');
+    const trigger = document.getElementById('env-trigger');
+    document.body.style.overflow = 'hidden';
+    trigger.addEventListener('click', () => {
+      audio.volume = .45;
+      audio.play().then(()=>setPlay(true)).catch(()=>{});
+      started = true;
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 900);
+    });
+  });
+</script>
+</body>
+</html>
