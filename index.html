@@ -1866,6 +1866,7 @@
   transform: scale(1.03);
 }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -2355,7 +2356,7 @@
             <div class="qr-title">Tagahanap ng upuan</div>
             <div class="qr-subtitle">I-scan o I-tap upang mahanap ang iyong nakatalagang upuan</div>
             <div class="qr-canvas-wrap">
-              <canvas id="qr-canvas" width="160" height="160"></canvas>
+              <div id="qr-canvas" style="display:inline-block;"></div>
             </div>
             <a href="https://byloveandcrafts.github.io/cliffordandalyannaseatfinder/" target="_blank" rel="noopener" class="qr-tap-btn" id="qr-open-btn">Hanapin ang Aking Upuan ↗</a>
           </div>
@@ -2623,67 +2624,21 @@
 document.addEventListener('DOMContentLoaded', initBlockPhotosFromCloudinary);
 
     /* ── QR CODE GENERATOR ── */
-    // QR code pointing to the RSVP / seat finder URL
-    (function generateQR() {
+    document.addEventListener('DOMContentLoaded', function () {
       const QR_URL = 'https://byloveandcrafts.github.io/cliffordandalyannaseatfinder/';
-      const canvas = document.getElementById('qr-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const SIZE = 160;
-      canvas.width = SIZE; canvas.height = SIZE;
+      const wrap = document.getElementById('qr-canvas');
+      if (!wrap || typeof QRCode === 'undefined') return;
+      wrap.innerHTML = '';
+      new QRCode(wrap, {
+        text: QR_URL,
+        width: 160,
+        height: 160,
+        colorDark: '#0d0d0d',
+        colorLight: '#f9f7f2',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    });
 
-      // Use QRCode.js via CDN (loaded dynamically)
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-      script.onload = function () {
-        // Clear canvas approach — use a temp div then draw to canvas
-        const tempDiv = document.createElement('div');
-        tempDiv.style.cssText = 'position:absolute;left:-9999px;top:-9999px;';
-        document.body.appendChild(tempDiv);
-
-        const qr = new QRCode(tempDiv, {
-          text: QR_URL,
-          width: SIZE,
-          height: SIZE,
-          colorDark: '#0d0d0d',
-          colorLight: '#f9f7f2',
-          correctLevel: QRCode.CorrectLevel.H
-        });
-
-        // Wait for QR image to render, then copy to our canvas
-        setTimeout(() => {
-          const img = tempDiv.querySelector('img') || tempDiv.querySelector('canvas');
-          if (img) {
-            if (img.tagName === 'CANVAS') {
-              ctx.drawImage(img, 0, 0, SIZE, SIZE);
-            } else {
-              const i = new Image();
-              i.onload = () => { ctx.drawImage(i, 0, 0, SIZE, SIZE); };
-              i.src = img.src;
-            }
-          }
-          document.body.removeChild(tempDiv);
-
-          // Add decorative border frame inside the QR
-          ctx.strokeStyle = '#0d0d0d';
-          ctx.lineWidth = 2;
-          ctx.strokeRect(1, 1, SIZE - 2, SIZE - 2);
-        }, 300);
-      };
-      script.onerror = function () {
-        // Fallback: draw a simple placeholder if CDN fails
-        ctx.fillStyle = '#f9f7f2';
-        ctx.fillRect(0, 0, SIZE, SIZE);
-        ctx.fillStyle = '#0d0d0d';
-        ctx.font = 'bold 11px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('QR CODE', SIZE / 2, SIZE / 2 - 8);
-        ctx.font = '9px sans-serif';
-        ctx.fillText('Tap button below', SIZE / 2, SIZE / 2 + 8);
-        ctx.fillText('to find your seat', SIZE / 2, SIZE / 2 + 22);
-      };
-      document.head.appendChild(script);
-    })();
 
     /* ── MOBILE: Show/hide correct sponsor view ── */
     function applyMobileView() {
