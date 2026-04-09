@@ -66,7 +66,7 @@
     width: 100%;
     height: 0%; 
     overflow: hidden;
-    transition: height 2s cubic-bezier(0.4, 0, 0.2, 1); /* Slightly slower to let them enjoy the reveal */
+    transition: height 2s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
     border-radius: 2px;
   }
@@ -108,7 +108,6 @@
     background: repeating-linear-gradient(180deg, transparent, transparent 1px, rgba(0,0,0,0.08) 2px, transparent 3px);
   }
 
-  /* --- Text & Newspaper Layout --- */
   .np-inner-border { border: 1px solid #111; padding: 4px; height: 100%; box-sizing: border-box; }
   .np-inner-border-2 { border: 1px solid #111; height: 100%; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
   
@@ -116,7 +115,6 @@
   .np-date-row { font-family: 'Jost', sans-serif; font-size: 0.55rem; text-transform: uppercase; display: flex; justify-content: space-between; width: 100%; border-bottom: 1px solid #111; padding: 3px 0; margin-bottom: 10px; }
   .np-headline { font-family: 'Playfair Display', serif; font-size: 1.5rem; line-height: 1.1; color: #0d0d0d; text-align: center; text-transform: uppercase; font-weight: 900; margin: 0 0 10px 0; }
 
-  /* --- Photo & Caption Layout --- */
   .np-photo-section {
     width: 100%;
     border-top: 1px solid #111;
@@ -131,11 +129,10 @@
   .np-photo {
     width: 100%;
     height: auto;
-    max-height: 220px; /* Keeps landscape from getting too tall */
+    max-height: 220px;
     object-fit: cover;
     border: 1px solid #333;
-    /* Optional: Makes your photo look like a vintage newspaper print. Delete the line below for full color! */
-    filter: grayscale(100%) contrast(1.1) sepia(20%); 
+    
   }
 
   .np-caption {
@@ -148,7 +145,6 @@
     line-height: 1.3;
   }
 
-  /* Interactive Instruction */
   .tap-to-unroll {
     position: relative; z-index: 4; font-family: 'Jost', sans-serif; font-size: 0.75rem; color: #111; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; animation: pulseBtn 1.5s infinite; transition: opacity 0.3s;
   }
@@ -235,12 +231,6 @@
       transition: all .3s;
     }
 
-    .newspaper-envelope:hover .ne-seal {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-    }
-
     .ne-cta {
       font-family: 'Jost', sans-serif;
       font-size: .68rem;
@@ -252,15 +242,8 @@
     }
 
     @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: .35
-      }
-
-      50% {
-        opacity: .9
-      }
+      0%, 100% { opacity: .35 }
+      50% { opacity: .9 }
     }
 
     /* ── NEWSPAPER WRAPPER ── */
@@ -358,26 +341,10 @@
     }
 
     /* ── RULES ── */
-    .rule-thick {
-      border: none;
-      border-top: 3px solid var(--ink);
-      margin: 0;
-    }
-
-    .rule-double {
-      border: none;
-      border-top: 3px double var(--ink);
-    }
-
-    .rule-thin {
-      border: none;
-      border-top: 1px solid var(--ink);
-    }
-
-    .rule-dashed {
-      border: none;
-      border-top: 1px dashed var(--grey-mid);
-    }
+    .rule-thick { border: none; border-top: 3px solid var(--ink); margin: 0; }
+    .rule-double { border: none; border-top: 3px double var(--ink); }
+    .rule-thin { border: none; border-top: 1px solid var(--ink); }
+    .rule-dashed { border: none; border-top: 1px dashed var(--grey-mid); }
 
     .rule-ornate {
       display: flex;
@@ -412,20 +379,25 @@
       grid-template-columns: 1fr 2fr 1fr;
     }
 
+    /* FIX 1: PC Hero side panels — proper column layout with aligned text */
     .hero-side {
       padding: 1.5rem 1.2rem;
-      border-right: 1px solid var(--ink);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .6rem;
+      gap: .8rem;
+    }
+
+    .hero-side:first-child {
+      border-right: 1px solid var(--ink);
     }
 
     .hero-side:last-child {
-      border-right: none;
       border-left: 1px solid var(--ink);
+    }
+
+    .hero-side > div {
+      display: block;
     }
 
     .hs-label {
@@ -434,6 +406,7 @@
       text-transform: uppercase;
       color: var(--ink-faint);
       margin-bottom: .3rem;
+      display: block;
     }
 
     .hs-value {
@@ -442,6 +415,7 @@
       font-weight: 700;
       color: var(--ink);
       line-height: 1.3;
+      display: block;
     }
 
     .hs-note {
@@ -450,6 +424,7 @@
       font-size: .78rem;
       color: var(--ink-light);
       margin-top: .2rem;
+      display: block;
     }
 
     .hero-center {
@@ -469,9 +444,7 @@
       height: 100%;
       object-fit: cover;
       object-position: top center;
-      opacity: .85;
-      mix-blend-mode: luminosity;
-      filter: contrast(1.1) brightness(.9);
+      opacity: 1;
     }
 
     .hero-photo-placeholder {
@@ -483,9 +456,7 @@
       justify-content: center;
     }
 
-    .hero-photo-placeholder svg {
-      opacity: .12;
-    }
+    .hero-photo-placeholder svg { opacity: .12; }
 
     .hero-caption-band {
       position: relative;
@@ -557,6 +528,7 @@
     }
 
     /* ── COLUMNS GRID ── */
+    /* FIX 2: PC body grid — equal bottom padding so all columns end at same height before hashtag banner */
     .body-grid {
       display: grid;
       grid-template-columns: 1fr 2px 1.5fr 2px 1fr;
@@ -565,21 +537,14 @@
       border-bottom: 2px solid var(--ink);
     }
 
-    .col-divider {
-      background: var(--ink);
-    }
+    .col-divider { background: var(--ink); }
 
     .col {
       padding: 1.4rem 1.5rem 1.4rem;
     }
 
-    .col:first-child {
-      padding-left: 0;
-    }
-
-    .col:last-child {
-      padding-right: 0;
-    }
+    .col:first-child { padding-left: 0; }
+    .col:last-child { padding-right: 0; }
 
     /* ── ARTICLE TYPOGRAPHY ── */
     .art-label {
@@ -602,14 +567,8 @@
       margin-bottom: .4rem;
     }
 
-    .art-head.large {
-      font-size: 1.6rem;
-    }
-
-    .art-head em {
-      font-style: italic;
-      font-weight: 400;
-    }
+    .art-head.large { font-size: 1.6rem; }
+    .art-head em { font-style: italic; font-weight: 400; }
 
     .art-subhead {
       font-family: 'IM Fell English', serif;
@@ -639,9 +598,7 @@
       hyphens: auto;
     }
 
-    .art-body p {
-      margin-bottom: .7rem;
-    }
+    .art-body p { margin-bottom: .7rem; }
 
     .art-body p:first-child::first-letter {
       font-family: 'Playfair Display', serif;
@@ -679,7 +636,7 @@
       margin-top: .4rem;
     }
 
-    /* ── PHOTO BLOCK (inline, clickable upload) ── */
+    /* ── PHOTO BLOCK ── */
     .photo-block {
       margin: .8rem 0;
       border: 1px solid var(--ink);
@@ -694,9 +651,7 @@
       transition: filter .4s;
     }
 
-    .photo-block:hover img {
-      filter: grayscale(30%) contrast(1.05);
-    }
+    .photo-block:hover img { filter: grayscale(30%) contrast(1.05); }
 
     .photo-block-placeholder {
       width: 100%;
@@ -710,9 +665,12 @@
       min-height: 120px;
     }
 
-    .photo-block-placeholder svg {
-      opacity: .25;
+    /* FIX 2 (PC): Make bottom-left photo portrait to help equalise column heights */
+    .photo-block-portrait .photo-block-placeholder {
+      min-height: 200px;
     }
+
+    .photo-block-placeholder svg { opacity: .25; }
 
     .photo-block-placeholder span {
       font-family: 'Jost', sans-serif;
@@ -795,13 +753,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(90%) contrast(1.08) brightness(.92);
-      transition: filter .4s, transform .4s;
+      transition: transform .4s;
       display: block;
     }
 
     .carousel-slide:hover img {
-      filter: grayscale(30%) contrast(1.05) brightness(.98);
       transform: scale(1.03);
     }
 
@@ -816,9 +772,7 @@
       gap: .4rem;
     }
 
-    .carousel-slide-placeholder svg {
-      opacity: .18;
-    }
+    .carousel-slide-placeholder svg { opacity: .18; }
 
     .carousel-slide-placeholder span {
       font-family: 'Jost', sans-serif;
@@ -880,18 +834,9 @@
       user-select: none;
     }
 
-    .carousel-btn:hover {
-      background: rgba(13, 13, 13, 0.9);
-      color: var(--paper);
-    }
-
-    .carousel-btn.prev {
-      left: 8px;
-    }
-
-    .carousel-btn.next {
-      right: 8px;
-    }
+    .carousel-btn:hover { background: rgba(13, 13, 13, 0.9); color: var(--paper); }
+    .carousel-btn.prev { left: 8px; }
+    .carousel-btn.next { right: 8px; }
 
     .carousel-dots {
       display: flex;
@@ -912,10 +857,7 @@
       border: 1px solid var(--grey);
     }
 
-    .carousel-dot.active {
-      background: var(--ink);
-      transform: scale(1.3);
-    }
+    .carousel-dot.active { background: var(--ink); transform: scale(1.3); }
 
     .carousel-caption {
       font-size: .6rem;
@@ -926,9 +868,7 @@
       background: var(--paper-mid);
     }
 
-    .carousel-input {
-      display: none;
-    }
+    .carousel-input { display: none; }
 
     /* ── ENTOURAGE LISTING ── */
     .roster {
@@ -955,10 +895,7 @@
       padding: .1rem 0;
     }
 
-    .roster-name::before {
-      content: '— ';
-      color: var(--ink-faint);
-    }
+    .roster-name::before { content: '— '; color: var(--ink-faint); }
 
     /* ── SPONSOR PAIRS TABLE ── */
     .sponsor-table {
@@ -986,9 +923,7 @@
       line-height: 1.4;
     }
 
-    .sponsor-table tr:hover td {
-      background: var(--paper-dark);
-    }
+    .sponsor-table tr:hover td { background: var(--paper-dark); }
 
     /* ── ITINERARY ── */
     .it-row {
@@ -1000,9 +935,7 @@
       border-bottom: 1px solid var(--rule-thin);
     }
 
-    .it-row:last-child {
-      border-bottom: none;
-    }
+    .it-row:last-child { border-bottom: none; }
 
     .it-time {
       font-size: .62rem;
@@ -1014,10 +947,7 @@
       font-family: 'Libre Baskerville', serif;
     }
 
-    .it-event {
-      font-size: .8rem;
-      color: var(--ink-mid);
-    }
+    .it-event { font-size: .8rem; color: var(--ink-mid); }
 
     .it-event strong {
       font-family: 'Playfair Display', serif;
@@ -1071,11 +1001,7 @@
       border: 1px solid var(--grey-mid);
     }
 
-    .db-text {
-      font-size: .75rem;
-      color: var(--ink-mid);
-      line-height: 1.7;
-    }
+    .db-text { font-size: .75rem; color: var(--ink-mid); line-height: 1.7; }
 
     .attire-grid {
       margin-top: .75rem;
@@ -1093,9 +1019,7 @@
       text-align: left;
     }
 
-    .attire-row:last-child {
-      border-bottom: none;
-    }
+    .attire-row:last-child { border-bottom: none; }
 
     .attire-role {
       font-size: .56rem;
@@ -1175,9 +1099,7 @@
       border-right: 1px solid var(--rule-thin);
     }
 
-    .cd-cell:last-child {
-      border-right: none;
-    }
+    .cd-cell:last-child { border-right: none; }
 
     .cd-num {
       font-family: 'Playfair Display', serif;
@@ -1254,9 +1176,88 @@
       transition: all .25s;
     }
 
-    .rb-btn:hover {
-      background: rgba(249, 247, 242, 0.12);
+    .rb-btn:hover { background: rgba(249, 247, 242, 0.12); }
+
+    /* ── QR CODE SECTION ── */
+    .qr-seat-section {
+      border: 2px solid var(--ink);
+      padding: 1rem;
+      text-align: center;
+      margin: .8rem 0 0;
+      position: relative;
+      background: var(--paper);
     }
+
+    .qr-seat-section::before {
+      content: '✦';
+      position: absolute;
+      top: -.55rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--paper);
+      padding: 0 .4rem;
+      font-size: .7rem;
+      color: var(--ink-light);
+    }
+
+    .qr-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .9rem;
+      margin-bottom: .3rem;
+      color: var(--ink);
+    }
+
+    .qr-subtitle {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: .75rem;
+      color: var(--ink-light);
+      margin-bottom: .8rem;
+    }
+
+    .qr-canvas-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: .5rem auto;
+    }
+
+    #qr-canvas {
+      border: 6px solid var(--ink);
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    .qr-note {
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-top: .6rem;
+      line-height: 1.6;
+    }
+
+    .qr-tap-btn {
+      display: inline-block;
+      margin-top: .7rem;
+      border: 1px solid var(--ink);
+      padding: .45rem 1.2rem;
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-size: .65rem;
+      font-weight: 400;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--ink);
+      transition: all .25s;
+      cursor: pointer;
+      background: none;
+    }
+
+    .qr-tap-btn:hover { background: var(--ink); color: var(--paper); }
 
     /* ── NOTES ITEMS ── */
     .note-item {
@@ -1264,9 +1265,7 @@
       border-bottom: 1px solid var(--rule-thin);
     }
 
-    .note-item:last-child {
-      border-bottom: none;
-    }
+    .note-item:last-child { border-bottom: none; }
 
     .ni-head {
       font-family: 'Playfair Display', serif;
@@ -1276,16 +1275,10 @@
       margin-bottom: .2rem;
     }
 
-    .ni-text {
-      font-size: .76rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-    }
+    .ni-text { font-size: .76rem; color: var(--ink-light); line-height: 1.65; }
 
     /* ── VENUE CARD ── */
-    .venue-card {
-      margin-bottom: 1rem;
-    }
+    .venue-card { margin-bottom: 1rem; }
 
     .vc-label {
       font-size: .56rem;
@@ -1305,12 +1298,7 @@
       margin-bottom: .2rem;
     }
 
-    .vc-addr {
-      font-size: .76rem;
-      color: var(--ink-light);
-      line-height: 1.6;
-      margin-bottom: .4rem;
-    }
+    .vc-addr { font-size: .76rem; color: var(--ink-light); line-height: 1.6; margin-bottom: .4rem; }
 
     .vc-link {
       font-size: .65rem;
@@ -1323,9 +1311,7 @@
     }
 
     /* ── FAQ ── */
-    .faq-item {
-      border-bottom: 1px solid var(--rule-thin);
-    }
+    .faq-item { border-bottom: 1px solid var(--rule-thin); }
 
     .faq-q {
       font-family: 'Playfair Display', serif;
@@ -1340,9 +1326,7 @@
       gap: .5rem;
     }
 
-    .faq-q:hover {
-      color: var(--ink-light);
-    }
+    .faq-q:hover { color: var(--ink-light); }
 
     .faq-icon {
       font-size: .9rem;
@@ -1351,9 +1335,7 @@
       transition: transform .3s;
     }
 
-    .faq-item.open .faq-icon {
-      transform: rotate(45deg);
-    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
 
     .faq-a {
       font-size: .76rem;
@@ -1364,10 +1346,7 @@
       transition: max-height .4s ease, padding .3s;
     }
 
-    .faq-item.open .faq-a {
-      max-height: 200px;
-      padding-bottom: .6rem;
-    }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: .6rem; }
 
     /* ── BOTTOM GRID ── */
     .bottom-grid {
@@ -1388,24 +1367,9 @@
       gap: .5rem;
     }
 
-    .nf-copy {
-      font-size: .62rem;
-      color: var(--ink-faint);
-      letter-spacing: .12em;
-    }
-
-    .nf-mark {
-      font-family: 'UnifrakturMaguntia', cursive;
-      font-size: 1.1rem;
-      color: var(--ink-light);
-    }
-
-    .nf-love {
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
-      font-size: .78rem;
-      color: var(--ink-faint);
-    }
+    .nf-copy { font-size: .62rem; color: var(--ink-faint); letter-spacing: .12em; }
+    .nf-mark { font-family: 'UnifrakturMaguntia', cursive; font-size: 1.1rem; color: var(--ink-light); }
+    .nf-love { font-family: 'IM Fell English', serif; font-style: italic; font-size: .78rem; color: var(--ink-faint); }
 
     /* ── MUSIC PLAYER ── */
     #music-player {
@@ -1433,15 +1397,8 @@
       transition: all .25s;
     }
 
-    #music-toggle:hover {
-      background: var(--ink-mid);
-    }
-
-    #music-toggle svg {
-      width: 18px;
-      height: 18px;
-      fill: var(--paper);
-    }
+    #music-toggle:hover { background: var(--ink-mid); }
+    #music-toggle svg { width: 18px; height: 18px; fill: var(--paper); }
 
     #music-label {
       background: var(--ink);
@@ -1458,16 +1415,9 @@
       white-space: nowrap;
     }
 
-    #music-player:hover #music-label {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    #music-player:hover #music-label { opacity: 1; transform: translateY(0); }
 
-    @keyframes spinR {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+    @keyframes spinR { to { transform: rotate(360deg); } }
 
     #music-toggle.playing::after {
       content: '';
@@ -1480,9 +1430,7 @@
       pointer-events: none;
     }
 
-    #music-toggle {
-      position: relative;
-    }
+    #music-toggle { position: relative; }
 
     /* ── NAV ── */
     nav {
@@ -1503,16 +1451,9 @@
       backdrop-filter: blur(12px);
     }
 
-    .nav-mark {
-      font-family: 'UnifrakturMaguntia', cursive;
-      font-size: 1.1rem;
-      color: var(--ink);
-    }
+    .nav-mark { font-family: 'UnifrakturMaguntia', cursive; font-size: 1.1rem; color: var(--ink); }
 
-    .nav-links {
-      display: flex;
-      gap: 1.2rem;
-    }
+    .nav-links { display: flex; gap: 1.2rem; }
 
     .nav-links a {
       font-size: .58rem;
@@ -1525,9 +1466,7 @@
       font-weight: 400;
     }
 
-    .nav-links a:hover {
-      color: var(--ink);
-    }
+    .nav-links a:hover { color: var(--ink); }
 
     .nav-rsvp {
       font-size: .58rem;
@@ -1541,10 +1480,7 @@
       font-family: 'Jost', sans-serif;
     }
 
-    .nav-rsvp:hover {
-      background: var(--ink);
-      color: var(--paper);
-    }
+    .nav-rsvp:hover { background: var(--ink); color: var(--paper); }
 
     .hamburger {
       display: none;
@@ -1556,67 +1492,23 @@
       padding: 3px;
     }
 
-    .hamburger span {
-      display: block;
-      height: 2px;
-      width: 22px;
-      background: var(--ink);
-      transition: all .3s;
-    }
-
-    .hamburger.open span:nth-child(1) {
-      transform: translateY(6px) rotate(45deg);
-    }
-
-    .hamburger.open span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.open span:nth-child(3) {
-      transform: translateY(-6px) rotate(-45deg);
-    }
+    .hamburger span { display: block; height: 2px; width: 22px; background: var(--ink); transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
     /* ── REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity .8s ease, transform .8s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .12s; }
+    .d2 { transition-delay: .22s; }
+    .d3 { transition-delay: .32s; }
 
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-    }
-
-    .d1 {
-      transition-delay: .12s;
-    }
-
-    .d2 {
-      transition-delay: .22s;
-    }
-
-    .d3 {
-      transition-delay: .32s;
-    }
-
-    .no-gap-bottom {
-      padding-bottom: 0 !important;
-    }
-
-    /* ===== FIXED MOBILE LAYOUT: 2-COLUMN LAYOUT FOR SPECIFIC SECTIONS ===== */
+    /* ===== MOBILE LAYOUT ===== */
     @media (max-width: 720px) {
-      nav {
-        padding: 0 1rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
 
       .nav-links.open {
         display: flex;
@@ -1632,67 +1524,36 @@
         z-index: 199;
       }
 
-      .nav-links.open a {
-        padding: .8rem 0;
-        border-bottom: 1px solid var(--rule-thin);
-      }
+      .nav-links.open a { padding: .8rem 0; border-bottom: 1px solid var(--rule-thin); }
 
-      .hero-strip {
-        grid-template-columns: 1fr;
-      }
+      .hero-strip { grid-template-columns: 1fr; }
+      .hero-side { display: none; }
+      .hero-side:last-child { display: none; }
 
-      .hero-side {
-        display: none;
-      }
-
-      .hero-side:last-child {
-        display: none;
-      }
-
-      /* Reset default single-column for BODY and BOTTOM grids */
       .body-grid {
-        grid-template-columns: 1fr;
+        display: block;
         padding: 0 1rem;
+        /* FIX mobile: ensure full border before hashtag banner */
+        border-bottom: 2px solid var(--ink);
       }
 
       .bottom-grid {
-        grid-template-columns: 1fr;
+        display: block;
         padding: 0 1rem;
       }
 
-      .col-divider {
-        display: none;
-      }
+      .col-divider { display: none; }
 
       .col {
         padding: 1.2rem 0;
         border-bottom: 1px solid var(--rule-thin);
       }
 
-      /* SPECIAL OVERRIDE: Create custom 2-col layout on mobile for body-grid columns */
-      .body-grid {
-        display: flex;
-        flex-direction: column;
+      .col:last-child {
+        border-bottom: none;
       }
 
-      .body-grid .col:first-child {
-        width: 100%;
-        order: 1;
-      }
-
-      .body-grid::after {
-        display: none;
-      }
-
-      .body-grid {
-        display: block;
-      }
-
-      .body-grid .col:nth-child(2) {
-        display: inline-block;
-        vertical-align: top;
-      }
-
+      /* 2-col layout for body cols 2 and 3 */
       .body-grid .col:first-child {
         display: block;
         width: 100%;
@@ -1709,62 +1570,38 @@
         border-bottom: none;
       }
 
-      .body-grid .col:nth-child(2) {
-        padding-right: 0.5rem;
-      }
-
+      /* FIX MOBILE: Add proper bottom spacing before hashtag — 1rem on the 2-col pair */
       .body-grid .col:nth-child(3) {
-        padding-left: 0.5rem;
+        padding-bottom: 1.2rem;
       }
 
-      .body-grid .col-divider {
-        display: none;
+      .body-grid .col:nth-child(2) {
+        padding-bottom: 1.2rem;
       }
 
-      /* Bottom grid */
+      /* Ensure the body-grid itself has a proper bottom border flush */
+      .body-grid::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+
+      /* Bottom grid layout */
+      /* FIX MOBILE: Reorder bottom grid columns — RSVP (col2=venue) last, Sponsors first */
       .bottom-grid {
-        display: block;
+        display: flex;
+        flex-direction: column;
       }
 
-      .bottom-grid .col:first-child {
-        width: 100%;
-        display: block;
-        border-bottom: 1px solid var(--rule-thin);
-      }
+      /* Original order: col1=message, col2=venue+rsvp, col3=sponsors */
+      /* New mobile order: col1=message, col3=sponsors, col2=venue+rsvp */
+      .bottom-grid .col:nth-child(1) { order: 1; border-bottom: 1px solid var(--rule-thin); }
+      .bottom-grid .col:nth-child(3) { order: 2; border-bottom: 1px solid var(--rule-thin); }
+      .bottom-grid .col:nth-child(2) { order: 3; border-bottom: none; }
 
-      .bottom-grid .col:nth-child(2),
-      .bottom-grid .col:nth-child(3) {
-        display: inline-block;
-        width: 49%;
-        vertical-align: top;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        border-bottom: none;
-      }
-
-      .bottom-grid .col:nth-child(2) {
-        padding-right: 0.5rem;
-      }
-
-      .bottom-grid .col:nth-child(3) {
-        padding-left: 0.5rem;
-      }
-
-      .bottom-grid .col-divider {
-        display: none;
-      }
-
-      .masthead {
-        padding: 1rem 1rem .6rem;
-      }
-
-      .headline-section {
-        padding: 1.2rem 1rem .8rem;
-      }
-
-      .hashtag-banner {
-        padding: 1rem 1rem;
-      }
+      .masthead { padding: 1rem 1rem .6rem; }
+      .headline-section { padding: 1.2rem 1rem .8rem; }
+      .hashtag-banner { padding: 1rem 1rem; }
 
       .newspaper-footer {
         padding: .8rem 1rem;
@@ -1773,17 +1610,11 @@
         text-align: center;
       }
 
-      .art-body p:first-child::first-letter {
-        font-size: 2.8rem;
-      }
+      .art-body p:first-child::first-letter { font-size: 2.8rem; }
 
-      .attire-row {
-        grid-template-columns: 1fr;
-      }
+      .attire-row { grid-template-columns: 1fr; }
 
-      /* ===== MOBILE CONTENT FIXES ===== */
-
-      /* 1. Center mast-top-bar and mast-bottom-bar — 3 equal columns, centered text */
+      /* ── MOBILE CONTENT FIXES ── */
       .mast-top-bar {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -1821,41 +1652,25 @@
         word-break: break-word;
       }
 
-      /* 2. Center "How It All Began / A Tale of Destiny" header block */
       .body-grid .col:first-child > .art-label,
       .body-grid .col:first-child > .art-head,
-      .body-grid .col:first-child > .art-byline {
-        text-align: center;
-      }
+      .body-grid .col:first-child > .art-byline { text-align: center; }
 
-      /* 3. Center "Kilalanin ang Magkasintahan" label */
-      .couple-section-label {
-        display: block;
-        margin-top: .6rem;
-        text-align: left;
-      }
+      .couple-section-label { display: block; margin-top: .6rem; text-align: left; }
 
-      /* Make Nobyo/Nobya side by side and centered */
       .couple-block {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: .5rem;
         margin-top: .5rem;
-        
       }
 
-      .couple-block-divider {
-        display: none;
-      }
+      .couple-block-divider { display: none; }
 
-      /* 4. Center "May pagmamahal at suporta" entourage headers */
       #entourage > .art-label,
       #entourage > .art-head,
-      #entourage > .art-byline {
-        text-align: center;
-      }
+      #entourage > .art-byline { text-align: center; }
 
-      /* Make Punong Abay side by side and centered */
       .punong-abay-block {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1864,21 +1679,12 @@
         text-align: left;
       }
 
-      .punong-abay-block > div {
-        text-align: left;
-      }
+      .punong-abay-block > div { text-align: left; }
+      .punong-abay-divider { display: none; }
 
-      .punong-abay-divider {
-        display: none;
-      }
+      .notes-section-label { text-align: center; display: block; margin-bottom: .5rem; }
 
-      /* 5. Center "Notes & Reminders" label and make 2x2 grid */
-      .notes-section-label {
-        text-align: center;
-        display: block;
-        margin-bottom: .5rem;
-      }
-
+      /* FIX MOBILE: Notes 2x2 grid with all boxes closed (border-bottom on last item) */
       #notes {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1888,111 +1694,177 @@
 
       #notes .note-item {
         border: 1px solid var(--rule-thin);
-        border-bottom: 1px solid var(--rule-thin);
+        /* FIX: Override last-child removal of border-bottom so all boxes are closed */
+        border-bottom: 1px solid var(--rule-thin) !important;
         padding: .5rem .4rem;
         text-align: center;
       }
 
-      #notes .note-item .ni-head {
-        font-size: .78rem;
-      }
+      #notes .note-item .ni-head { font-size: .78rem; }
+      #notes .note-item .ni-text { font-size: .68rem; }
 
-      #notes .note-item .ni-text {
-        font-size: .68rem;
-      }
-
-      /* Space below photo block before hashtag banner */
+      /* FIX MOBILE: Remove extra space on photo block before hashtag */
       .body-grid .col:nth-child(3) .photo-block {
-        margin-bottom: 5.5rem;
+        margin-bottom: 0;
       }
 
-      /* 6. Center "Saan Kami Matatagpuan" / venue section */
       #venue > .art-label,
       #venue > .art-head,
-      #venue > .art-byline {
+      #venue > .art-byline { text-align: center; }
+
+      .venue-card { text-align: center; }
+      .venue-card .vc-label { text-align: center; }
+      .venue-card .vc-name { text-align: center; }
+      .venue-card .vc-addr { text-align: center; }
+      .venue-card .vc-link { display: inline-block; text-align: center; }
+
+      .secondary-sponsors-label { text-align: center; display: block; margin-bottom: .5rem; }
+
+      /* FIX MOBILE: Secondary sponsors as boxes instead of lines */
+      .roster { text-align: center; }
+      .roster-head { text-align: center; }
+
+      /* Secondary sponsors box layout */
+      .secondary-sponsors-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .4rem;
+        margin-bottom: .6rem;
+      }
+
+      .secondary-sponsors-grid .roster-name-box {
+        border: 1px solid var(--rule-thin);
+        padding: .35rem .4rem;
+        font-family: 'Libre Baskerville', serif;
+        font-size: .7rem;
+        color: var(--ink-mid);
         text-align: center;
+        line-height: 1.4;
+        background: var(--paper-mid);
       }
 
-      .venue-card {
-        text-align: center;
+      /* If only 1 name in a group, span full width */
+      .secondary-sponsors-grid .roster-name-box.full-width {
+        grid-column: 1 / -1;
       }
 
-      .venue-card .vc-label {
-        text-align: center;
-      }
-
-      .venue-card .vc-name {
-        text-align: center;
-      }
-
-      .venue-card .vc-addr {
-        text-align: center;
-      }
-
-      .venue-card .vc-link {
-        display: inline-block;
-        text-align: center;
-      }
-
-      /* Center secondary sponsors label and all roster items */
-      .secondary-sponsors-label {
-        text-align: center;
-        display: block;
-        margin-bottom: .5rem;
-      }
-
-      .roster {
-        text-align: center;
-      }
-
-      .roster-head {
-        text-align: center;
-      }
-
-      .roster-name {
-        text-align: center;
-      }
-
-      .roster-name::before {
-        content: '';
-      }
-
-      /* Center sponsors column labels */
       .bottom-grid .col:last-child > .art-label,
       .bottom-grid .col:last-child > .art-head,
-      .bottom-grid .col:last-child > .art-byline {
-        text-align: center;
+      .bottom-grid .col:last-child > .art-byline { text-align: center; }
+
+      /* Mobile QR section */
+      .qr-seat-section { margin: .8rem 0 0; }
+
+      /* Mobile bottom grid: col:nth-child mapping for flex-direction:column with reorder */
+      .bottom-grid .col {
+        padding: 1.2rem 0;
       }
     }
 
-    /* Fine-tune for very small screens */
     @media (max-width: 560px) {
-
       .body-grid .col:nth-child(2),
-      .body-grid .col:nth-child(3),
-      .bottom-grid .col:nth-child(2),
-      .bottom-grid .col:nth-child(3) {
+      .body-grid .col:nth-child(3) {
         width: 100%;
         display: block;
         padding: 1rem 0;
         border-bottom: 1px solid var(--rule-thin);
       }
 
-      /* On very small screens, keep notes as 2x2 still */
-      #notes {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      /* Couple block stays side by side */
-      .couple-block {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      /* Punong abay stays side by side */
-      .punong-abay-block {
-        grid-template-columns: 1fr 1fr;
-      }
+      #notes { grid-template-columns: 1fr 1fr; }
+      .couple-block { grid-template-columns: 1fr 1fr; }
+      .punong-abay-block { grid-template-columns: 1fr 1fr; }
+      .secondary-sponsors-grid { grid-template-columns: 1fr 1fr; }
     }
+
+    /* ── INFINITE MOVING PHOTO STRIP ── */
+  /* ── INFINITE MOVING PHOTO STRIP CSS ── */
+.photo-strip-container {
+  width: 100%;
+  overflow: hidden;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper-mid);
+  padding: 15px 0;
+  margin: 0.25rem 0;
+  position: relative;
+}
+
+.photo-strip-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.photo-strip-track {
+  display: flex;
+  width: max-content;
+  gap: 15px;
+  /* Increased from 30s to 120s because of the large number of photos */
+  animation: scroll-strip 120s linear infinite; 
+}
+
+/* Pause on hover */
+.photo-strip-container:hover .photo-strip-track {
+  animation-play-state: paused;
+}
+
+/* ── STRICT ANIMATIONS FOR BOTH DIRECTIONS ── */
+/* Normal: Right to Left */
+@keyframes scroll-strip {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Reverse: Left to Right */
+@keyframes scroll-strip-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Apply reverse animation */
+.photo-strip-track.reverse {
+  animation: scroll-strip-reverse 60s linear infinite !important;
+}
+
+/* 1. Base styling for ALL photos */
+.photo-strip-item {
+  height: 200px; /* This makes the strip perfectly straight horizontally */
+  
+  background: linear-gradient(135deg, #2a2a2a, #3d3d3d);
+  flex-shrink: 0;
+  position: relative;
+  border: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px; 
+}
+
+/* 2. Portrait shape (Narrow) */
+.photo-strip-item.portrait {
+  width: 140px; /* Narrower width for portraits */
+}
+
+/* 3. Landscape shape (Wide) */
+.photo-strip-item.landscape {
+  width: 280px; /* Wider width for landscapes */
+}
+
+
+
+.photo-strip-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s;
+  z-index: 2;
+}
+
+.photo-strip-item:hover img {
+  transform: scale(1.03);
+}
   </style>
 </head>
 
@@ -2000,37 +1872,29 @@
 
   <div id="newspaper-intro-wrapper">
   <div id="physical-paper-container">
-    
     <div id="unroll-window">
       <div id="paper-sheet">
         <div class="np-inner-border">
           <div class="np-inner-border-2">
-            
             <h1 class="np-masthead">The Wedding Times</h1>
             <div class="np-date-row">
-              <span>Special Edition</span>
-              <span>Lipa City, Philippines</span>
+              <span>Espesyal na Edisyon</span>
+              <span>Tagaytay City, Philippines</span>
               <span>2 Pages</span>
             </div>
-            
             <h2 class="np-headline">Ang Pag-iisang Dibdib nina<br>Clifford at Alyanna</h2>
-
             <div class="np-photo-section">
               <img src="photo.jpg" alt="photo" class="np-photo">
-              
               <p class="np-caption">"Sa pangalawang pagkakataon pinipili pa rin ang isa't isa - habangbuhay."</p>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-
     <div id="paper-cylinder">
       <div class="cylinder-rings"></div>
-      <div class="tap-to-unroll" id="btn-unroll">I-tap para buksan</div>
+      <div class="tap-to-unroll" id="btn-unroll">Pindutin para buksan</div>
     </div>
-
   </div>
 </div>
 
@@ -2038,11 +1902,11 @@
   <nav>
     <span class="nav-mark">C&A</span>
     <div class="nav-links" id="navLinks">
-      <a href="#story" onclick="closeMenu()">Our Story</a>
-      <a href="#entourage" onclick="closeMenu()">Entourage</a>
-      <a href="#schedule" onclick="closeMenu()">Schedule</a>
-      <a href="#venue" onclick="closeMenu()">Venue</a>
-      <a href="#notes" onclick="closeMenu()">Notes</a>
+      <a href="#story" onclick="closeMenu()">Aming Kwento</a>
+      <a href="#entourage" onclick="closeMenu()">Kasama sa Seremonya</a>
+      <a href="#schedule" onclick="closeMenu()">Palatuntunan</a>
+      <a href="#venue" onclick="closeMenu()">Pagdarausan</a>
+      <a href="#notes" onclick="closeMenu()">Mga Tala</a>
       <a href="#rsvp" onclick="closeMenu()">RSVP</a>
     </div>
     <div style="display:flex;align-items:center;gap:.6rem;">
@@ -2058,7 +1922,7 @@
       <!-- MASTHEAD -->
       <div class="masthead">
         <div class="mast-top-bar">
-          <span>Batangas City, Philippines</span>
+          <span>Tagaytay City, Philippines</span>
           <span class="mast-tagline">"Dalwang Pusong Pinagtagpo, Isang kwento"</span>
           <span>Linggo, Mayo 17, 2026</span>
         </div>
@@ -2068,7 +1932,7 @@
           <div class="mast-subtitle">Isang Imbitasyon sa Kasal at Souvenir Program</div>
         </div>
         <div class="mast-bottom-bar">
-          <span>Issue No. 1 &nbsp;·&nbsp; Est. 2026</span>
+          <span>Isyu No. 1 &nbsp;·&nbsp; Est. 2026</span>
           <span>Vol. I — Ang Edisyon ng Kasal</span>
           <span>Naka Limbag sa Pagibig</span>
         </div>
@@ -2076,6 +1940,7 @@
 
       <!-- HERO STRIP -->
       <div class="hero-strip" id="story">
+        <!-- FIX 1: Hero side panels with proper stacked single-column layout -->
         <div class="hero-side">
           <div>
             <div class="hs-label">Lokasyon ng Kaganapan</div>
@@ -2096,30 +1961,29 @@
 
         <div class="hero-center">
           <div class="hero-photo-placeholder">
-            <svg width="80" height="80" fill="none" stroke="white" stroke-width="1" viewBox="0 0 24 24">
+            <img src="_DSC3119.jpg" alt="Clifford and Alyanna" style="width: 100%; height: 100%; object-fit: cover;">
               <circle cx="12" cy="8" r="4" />
               <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
             </svg>
           </div>
           <div class="hero-caption-band">
             <div class="hcb-names">Clifford &amp; Alyanna</div>
-            <div class="hcb-tagline">You're Invited to A Love Story for the Ages</div>
+            <div class="hcb-tagline">Iniimbitahan ka sa isang storyang pang walang hanggan.</div>
           </div>
         </div>
 
         <div class="hero-side">
           <div>
-            <div class="hs-label">Wedding Hashtag</div>
+            <div class="hs-label">Hashtag ng Kasal</div>
             <div class="hs-value" style="font-size:.82rem;">#FordtheoneforYanna</div>
-            <div class="hs-note">Tag your photos with us</div>
+            <div class="hs-note">I-tag ang inyong larawan kasama kami!</div>
           </div>
           <div>
             <div class="hs-label">RSVP Deadline</div>
             <div class="hs-value">Abril 25, 2026</div>
-            <div class="hs-note">Strictly +1</div>
           </div>
           <div>
-            <div class="hs-label">Reception Dinner</div>
+            <div class="hs-label">Hapunan sa Pagtanggap</div>
             <div class="hs-value">Midlands Veranda sa Tagaytay Highlands</div>
             <div class="hs-note">6:00 pm ng Gabi</div>
           </div>
@@ -2128,10 +1992,9 @@
 
       <!-- MAIN HEADLINE -->
       <div class="headline-section reveal">
-        <div class="hl-kicker">Exclusive Announcement — Issue No. 1</div>
+        <div class="hl-kicker">Eksklusibong Anunsyo — Isyu No. 1</div>
         <div class="hl-main">ANG KUWENTO NATING DALAWA!</div>
-        <div class="hl-sub">After seven extraordinary years, Clifford & Alyanna invite you to witness their forever
-        </div>
+        <div class="hl-sub">Matapos ang siyam na pambihirang taon, inaanyayahan nina Clifford at Alyanna na masaksihan ninyo ang kanilang walang hanggang pag mamahalan.</div>
         <div class="hl-byline">&nbsp;·&nbsp; Mayo 17,2026 &nbsp;·&nbsp;</div>
       </div>
 
@@ -2139,44 +2002,42 @@
       <div class="body-grid">
 
         <!-- COL 1: STORY -->
-        <div class="col reveal" style="padding-bottom:0;">
-          <span class="art-label">How It All Began</span>
-          <h2 class="art-head">A Tale <em>of Destiny</em></h2>
-          <div class="art-byline">By Alyanna &nbsp;·&nbsp; Batangas City</div>
+        <div class="col reveal" style="padding-bottom:1.4rem;">
+          <span class="art-label">Sa Bukang Liwayway Ng Ating Pinagdaanan</span>
+          <h2 class="art-head">Pinagtagpo <em>ng Tadhana</em></h2>
+          <div class="art-byline">By Alyanna & Clifford &nbsp;·&nbsp; Tagaytay City</div>
           <div class="art-body">
-            <p>It all began in Uptown back in 2018, where two ordinary days turned into something extraordinary. We were
-              both just working then — two unsuspecting souls — not knowing that we were about to build a lifetime
-              together.</p>
-            <p>A year later, our love blossomed into something even more beautiful as we welcomed our firstborn, baby
-              boy Jaykkylle — our greatest blessing and the tender beginning of our little family.</p>
+            <p>Sa isang simpleng vision screening noong April 24, 2014, 
+              nagsimula ang lahat—at sa isang mensahe, 
+              tuluyang nagtagpo ang kanilang mundo.</p>
+            <p>Pareho sila ng kurso, pareho ng bayan—at ang twist, ilang kanto lang pala ang pagitan ng 
+              kanilang mga bahay. Magkalapit na sila noon pa man, ngunit sa kolehiyo pa sila tunay na nagkakilala. 
+              Parang matagal na silang pinagtagpo, ngunit hinintay ng tadhana ang tamang panahon.</p>
           </div>
           <div class="pull-quote">
-            <div class="pq-text">"Two hearts, one story, a thousand moments"</div>
+            <div class="pq-text">"Dalwang puso, Isang kwento, Isang libong sandaling puno ng pag-ibig"</div>
             <div class="pq-attr">— Clifford</div>
           </div>
           <div class="art-body">
-            <p>Five years after, our hearts expanded once more with the arrival of our baby girl, Quinn — completing the
-              love we never knew we needed.</p>
-            <p>Through the years, we have faced life hand in hand, growing, learning, and choosing each other every
-              single day.</p>
+            <p>Mula “ate” to forever—pag-ibig na pinili araw-araw, 
+              may biyayang si Matteo Makisig, at pusong iniaalay sa Diyos.</p>
+            <p>Kasi minsan, hindi kailangan ng engrandeng 
+              simula, isang simpleng “hello” lang, kapag itinadhana na, nagiging habang-buhay.</p>
           </div>
           <hr class="rule-thin" style="margin:.8rem 0;">
 
-          <!-- KILALANIN ANG MAG KASINTAHAN — label + side-by-side couple block -->
           <span class="art-label couple-section-label" style="margin-top:.6rem;">Kilalanin ang magkasintahan</span>
           <div class="couple-block">
             <div>
               <div class="hs-label" style="font-size:.58rem;">Ang Nobya</div>
-              <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;">Maria Alyanna Hope C.
-                Bumolo</div>
+              <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;">Maria Alyanna Hope C. Bumolo</div>
               <div style="font-size:.73rem;color:var(--ink-light);line-height:1.7;">
                 Anak nina Vice Mayor Alberto D. Bumolo Jr.<br>& Dr. Mary Hope C. Bumolo
               </div>
             </div>
             <div>
               <div class="hs-label" style="font-size:.58rem;">Ang Nobyo</div>
-              <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;">Edwin Clifford F.
-                Tito</div>
+              <div style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;">Edwin Clifford F. Tito</div>
               <div style="font-size:.73rem;color:var(--ink-light);line-height:1.7;">
                 Anak nina Mr. Edgardo M. Tito & Mrs. Lorna F. Tito
               </div>
@@ -2187,84 +2048,52 @@
         <div class="col-divider"></div>
 
         <!-- COL 2: CENTER -->
-        <div class="col reveal d1" style="padding-bottom:0;">
-          <span class="art-label">Captured Moments</span>
-          <h2 class="art-head" style="margin-bottom:.6rem;">Our <em>Story in Photos</em></h2>
+        <div class="col reveal d1" style="padding-bottom:1.4rem;">
+          <span class="art-label">Mga sandaling inukit sa alaala</span>
+          <h2 class="art-head" style="margin-bottom:.6rem;">Ang aming <em>Kwento sa mga larawan</em></h2>
           <div class="carousel-wrap">
-            <div class="carousel-label">Clifford &amp; Alyanna · A Love Story in Eight Frames</div>
+            <div class="carousel-label">Clifford &amp; Alyanna · Pag-ibig na Nakalarawan</div>
             <div class="carousel-viewport" id="carouselViewport">
               <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-slide" id="cslide-1" onclick="triggerCarouselUpload(1)">
-                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg><span>photo 1</span></div><span class="carousel-num">01</span><input type="file"
-                    accept="image/*" class="carousel-input" id="cupload-1" onchange="loadCarouselPhoto(1, this)">
+                <div class="carousel-slide" id="cslide-1" data-src="https://res.cloudinary.com/dmcnpy20v/image/upload/v1775728465/1_f1foan.jpg" onclick="triggerCarouselUpload(1)">
+                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg><span>photo 1</span></div>
+                  <span class="carousel-num">01</span>
+                  <input type="file" accept="image/*" class="carousel-input" id="cupload-1" onchange="loadCarouselPhoto(1, this)">
                 </div>
-                <div class="carousel-slide" id="cslide-2" onclick="triggerCarouselUpload(2)">
-                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg><span>photo 2</span></div><span class="carousel-num">02</span><input type="file"
-                    accept="image/*" class="carousel-input" id="cupload-2" onchange="loadCarouselPhoto(2, this)">
+                <div class="carousel-slide" id="cslide-2" data-src="https://res.cloudinary.com/dmcnpy20v/image/upload/v1775728466/3_jq8nva.jpg" onclick="triggerCarouselUpload(2)">
+                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg><span>photo 2</span></div>
+                  <span class="carousel-num">02</span>
+                  <input type="file" accept="image/*" class="carousel-input" id="cupload-2" onchange="loadCarouselPhoto(2, this)">
                 </div>
-                <div class="carousel-slide" id="cslide-3" onclick="triggerCarouselUpload(3)">
-                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg><span>photo 3</span></div><span class="carousel-num">03</span><input type="file"
-                    accept="image/*" class="carousel-input" id="cupload-3" onchange="loadCarouselPhoto(3, this)">
+                <div class="carousel-slide" id="cslide-3" data-src="https://res.cloudinary.com/dmcnpy20v/image/upload/v1775728465/2_o4ja8w.jpg" onclick="triggerCarouselUpload(3)">
+                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg><span>photo 3</span></div>
+                  <span class="carousel-num">03</span>
+                  <input type="file" accept="image/*" class="carousel-input" id="cupload-3" onchange="loadCarouselPhoto(3, this)">
                 </div>
-                <div class="carousel-slide" id="cslide-4" onclick="triggerCarouselUpload(4)">
-                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg><span>photo 4</span></div><span class="carousel-num">04</span><input type="file"
-                    accept="image/*" class="carousel-input" id="cupload-4" onchange="loadCarouselPhoto(4, this)">
+                <div class="carousel-slide" id="cslide-4" data-src="https://res.cloudinary.com/dmcnpy20v/image/upload/v1775728828/4_iy7nsi.jpg" onclick="triggerCarouselUpload(4)">
+                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg><span>photo 4</span></div>
+                  <span class="carousel-num">04</span>
+                  <input type="file" accept="image/*" class="carousel-input" id="cupload-4" onchange="loadCarouselPhoto(4, this)">
                 </div>
-                <div class="carousel-slide" id="cslide-5" onclick="triggerCarouselUpload(5)">
-                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg><span>photo 5</span></div><span class="carousel-num">05</span><input type="file"
-                    accept="image/*" class="carousel-input" id="cupload-5" onchange="loadCarouselPhoto(5, this)">
+                <div class="carousel-slide" id="cslide-5" data-src="https://res.cloudinary.com/dmcnpy20v/image/upload/v1775728828/5_xa8jc4.jpg" onclick="triggerCarouselUpload(5)">
+                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg><span>photo 5</span></div>
+                  <span class="carousel-num">05</span>
+                  <input type="file" accept="image/*" class="carousel-input" id="cupload-5" onchange="loadCarouselPhoto(5, this)">
                 </div>
-                <div class="carousel-slide" id="cslide-6" onclick="triggerCarouselUpload(6)">
-                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg><span>photo 6</span></div><span class="carousel-num">06</span><input type="file"
-                    accept="image/*" class="carousel-input" id="cupload-6" onchange="loadCarouselPhoto(6, this)">
+                <div class="carousel-slide" id="cslide-6" data-src="https://res.cloudinary.com/dmcnpy20v/image/upload/v1775728829/8_nzpult.jpg" onclick="triggerCarouselUpload(6)">
+                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg><span>photo 6</span></div>
+                  <span class="carousel-num">06</span>
+                  <input type="file" accept="image/*" class="carousel-input" id="cupload-6" onchange="loadCarouselPhoto(6, this)">
                 </div>
-                <div class="carousel-slide" id="cslide-7" onclick="triggerCarouselUpload(7)">
-                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg><span>photo 7</span></div><span class="carousel-num">07</span><input type="file"
-                    accept="image/*" class="carousel-input" id="cupload-7" onchange="loadCarouselPhoto(7, this)">
+                <div class="carousel-slide" id="cslide-7" data-src="https://res.cloudinary.com/dmcnpy20v/image/upload/v1775728829/6_sheheb.jpg" onclick="triggerCarouselUpload(7)">
+                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg><span>photo 7</span></div>
+                  <span class="carousel-num">07</span>
+                  <input type="file" accept="image/*" class="carousel-input" id="cupload-7" onchange="loadCarouselPhoto(7, this)">
                 </div>
-                <div class="carousel-slide" id="cslide-8" onclick="triggerCarouselUpload(8)">
-                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                      stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg><span>photo 8</span></div><span class="carousel-num">08</span><input type="file"
-                    accept="image/*" class="carousel-input" id="cupload-8" onchange="loadCarouselPhoto(8, this)">
+                <div class="carousel-slide" id="cslide-8" data-src="https://res.cloudinary.com/dmcnpy20v/image/upload/v1775728829/7_ddogz1.jpg" onclick="triggerCarouselUpload(8)">
+                  <div class="carousel-slide-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg><span>photo 8</span></div>
+                  <span class="carousel-num">08</span>
+                  <input type="file" accept="image/*" class="carousel-input" id="cupload-8" onchange="loadCarouselPhoto(8, this)">
                 </div>
               </div>
               <button class="carousel-btn prev" onclick="carouselMove(-1)">&#8249;</button>
@@ -2280,8 +2109,7 @@
               <div class="carousel-dot" onclick="carouselGoTo(6)"></div>
               <div class="carousel-dot" onclick="carouselGoTo(7)"></div>
             </div>
-            <div class="carousel-caption">Click any frame to add your photo · Engagement &amp; Family shots welcome
-            </div>
+            <div class="carousel-caption">Click any frame to add your photo · Engagement &amp; Family shots welcome</div>
           </div>
           <span class="art-label">Counting Down</span>
           <h2 class="art-head large">The Wedding <em>Itinerary</em></h2>
@@ -2296,23 +2124,19 @@
           <div class="itinerary" id="schedule">
             <div class="it-row">
               <div class="it-time">2:30 PM</div>
-              <div class="it-event"><strong>Pagdating ng mga Panauhin</strong>Doors open. Guests welcomed and seated.
-              </div>
+              <div class="it-event"><strong>Pagdating ng mga Panauhin</strong>Pag-bukas ng mga pinto at pag-tanggap sa mga bisita</div>
             </div>
             <div class="it-row">
               <div class="it-time">3:00 PM</div>
-              <div class="it-event"><strong>Seremonya ng Kasal</strong>Madre de Dios Chapel, Tagaytay Highlands. Please
-                silence phones.</div>
+              <div class="it-event"><strong>Seremonya ng Kasal</strong>Madre de Dios Chapel, Tagaytay Highlands. Patahimik ang mga telepono.</div>
             </div>
             <div class="it-row">
               <div class="it-time">5:00 PM</div>
-              <div class="it-event"><strong>Munting Salu-Salo</strong>Celebrate and create new memories with the couple.
-              </div>
+              <div class="it-event"><strong>Munting Salu-Salo</strong>Magdiwang at lumikha ng mga bagong alaala kasama ang mag-asawa.</div>
             </div>
             <div class="it-row">
               <div class="it-time">6:00 PM</div>
-              <div class="it-event"><strong>Resepsyon at Pagdiriwang</strong>Midlands Veranda, Tagaytay Highlands. Food,
-                music, dancing!</div>
+              <div class="it-event"><strong>Resepsyon at Pagdiriwang</strong>Midlands Veranda, Tagaytay Highlands. Pag-kain, Tugtog, Sumayaw!</div>
             </div>
           </div>
           <hr class="rule-thin" style="margin:.9rem 0;">
@@ -2326,8 +2150,7 @@
               <div class="db-swatch" style="background:#D9BB9B;" title="Dark Beige"></div>
               <div class="db-swatch" style="background:#e5d1b8;" title="Sand Beige"></div>
             </div>
-            <div class="db-text">Champagne &nbsp;·&nbsp; Burgundy &nbsp;·&nbsp; Light Beige &nbsp;·&nbsp; Dark Beige
-              &nbsp;·&nbsp; Sand Beige</div>
+            <div class="db-text">Champagne &nbsp;·&nbsp; Burgundy &nbsp;·&nbsp; Light Beige &nbsp;·&nbsp; Dark Beige &nbsp;·&nbsp; Sand Beige</div>
             <div class="attire-grid">
               <div class="attire-row">
                 <div class="attire-role">Ninong</div>
@@ -2335,13 +2158,11 @@
               </div>
               <div class="attire-row">
                 <div class="attire-role">Ninang</div>
-                <div class="attire-desc">Modern Filipiñana sa kulay <span class="attire-swatch-inline"
-                    style="background:#F7E7CE;"></span><em>Champagne</em></div>
+                <div class="attire-desc">Filipiñana sa kulay <span class="attire-swatch-inline" style="background:#F7E7CE;"></span><em>Champagne</em></div>
               </div>
               <div class="attire-row">
                 <div class="attire-role">Mga Abay ng Nobya</div>
-                <div class="attire-desc">Filipiñana sa kulay <span class="attire-swatch-inline"
-                    style="background:#800020;"></span><em>Burgundy</em></div>
+                <div class="attire-desc">Filipiñana sa kulay <span class="attire-swatch-inline" style="background:#800020;"></span><em>Burgundy</em></div>
               </div>
               <div class="attire-row">
                 <div class="attire-role">Mga Abay ng Nobyo</div>
@@ -2349,15 +2170,11 @@
               </div>
               <div class="attire-row">
                 <div class="attire-role">Mga Panauhin</div>
-                <div class="attire-desc"><span style="display:block;">Kababaihan: Filipiñana sa kulay <span
-                      class="attire-swatch-inline"
-                      style="background:#e5d1b8;border-color:#c2a882;"></span><em>Beige</em></span><span
-                    style="display:block;">Kalalakihan: Barong, itim na pantalon at sapatos</span></div>
+                <div class="attire-desc"><span style="display:block;">Kababaihan: Filipiñana sa kulay <span class="attire-swatch-inline" style="background:#e5d1b8;border-color:#c2a882;"></span><em>Beige</em></span><span style="display:block;">Kalalakihan: Barong, itim na pantalon at sapatos</span></div>
               </div>
               <div class="attire-row" style="border-bottom:none;">
                 <div class="attire-role" style="color:#800020;font-weight:600;">Iwasan</div>
-                <div class="attire-desc" style="color:var(--ink-faint);font-size:.68rem;">Puti, Off-White, Ivory at
-                  matingkad na kulay o prints</div>
+                <div class="attire-desc" style="color:var(--ink-faint);font-size:.68rem;">Puti, Off-White, Ivory at matingkad na kulay o prints</div>
               </div>
             </div>
           </div>
@@ -2366,12 +2183,11 @@
         <div class="col-divider"></div>
 
         <!-- COL 3: ENTOURAGE + NOTES + PHOTO -->
-        <div class="col reveal d2" id="entourage" style="padding-bottom:0;">
+        <div class="col reveal d2" id="entourage" style="padding-bottom:1.4rem;">
           <span class="art-label">May pagmamahal at suporta</span>
           <h2 class="art-head">Kilalanin ang mga <em>Bituin ng Palabas</em></h2>
-          <div class="art-byline">The Wedding Entourage</div>
+          <div class="art-byline">Gabay</div>
 
-          <!-- PUNONG ABAY — side by side on mobile -->
           <div class="punong-abay-block">
             <div>
               <span class="hs-label" style="font-size:.58rem;display:block;margin-bottom:.2rem;">Punong abay ng Nobyo</span>
@@ -2382,7 +2198,6 @@
               <div style="font-family:'Playfair Display',serif;font-size:.88rem;font-weight:700;">Ms. Eda Marie A. Santos</div>
             </div>
           </div>
-          <!-- Desktop-only dividers (hidden on mobile via .punong-abay-divider) -->
           <hr class="rule-thin punong-abay-divider">
 
           <div style="margin:.8rem 0;">
@@ -2394,202 +2209,165 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Atty. Aldrine Llyod C. Bumolo</td>
-                  <td>Dr. Maria Alyzza Joy C. Bumolo</td>
-                </tr>
-                <tr>
-                  <td>Mr. Leo Angelo M. Pagtalunan</td>
-                  <td>Kathleen May V. Corpuz</td>
-                </tr>
-                <tr>
-                  <td>Mr. Nick Vergilio C. Tiam</td>
-                  <td>Dr. Nyche Dace D. Hung</td>
-                </tr>
-                <tr>
-                  <td>Dr. Gio B. Francisco</td>
-                  <td>Dr. Tarrah Akeem B. Baluso</td>
-                </tr>
-                <tr>
-                  <td>Dr. Paolo Enrique S. Divinagracia</td>
-                  <td>Mr. Mark Anthony Raymundo</td>
-                </tr>
-                <tr>
-                  <td>Mr. Louie John C. Ruben</td>
-                  <td>Dr. Ma. Regina Luz Danguilan</td>
-                </tr>
+                <tr><td>Atty. Aldrine Llyod C. Bumolo</td><td>Dr. Maria Alyzza Joy C. Bumolo</td></tr>
+                <tr><td>Mr. Leo Angelo M. Pagtalunan</td><td>Kathleen May V. Corpuz</td></tr>
+                <tr><td>Mr. Nick Vergilio C. Tiam</td><td>Dr. Nyche Dace D. Hung</td></tr>
+                <tr><td>Dr. Gio B. Francisco</td><td>Dr. Tarrah Akeem B. Baluso</td></tr>
+                <tr><td>Dr. Paolo Enrique S. Divinagracia</td><td>Mr. Mark Anthony Raymundo</td></tr>
+                <tr><td>Mr. Louie John C. Ruben</td><td>Dr. Ma. Regina Luz Danguilan</td></tr>
               </tbody>
             </table>
           </div>
           <hr class="rule-thin" style="margin:.6rem 0;">
 
-          <!-- NOTES & REMINDERS -->
           <span class="art-label notes-section-label" style="display:block;margin-bottom:.5rem;">Notes & Reminders</span>
           <div id="notes">
             <div class="note-item">
-              <div class="ni-head">Gift Guide</div>
-              <div class="ni-text">Your presence and prayers are all we request. Monetary gifts are also warmly welcome.</div>
+              <div class="ni-head">Gabay sa Regalo</div>
+              <div class="ni-text">Sa aming pagdiriwang ng pag-ibig, and inyong presensya and aming pinakaaasam at alaala na aming iingatan. Kung may handong man kayong nanaisin, ikagagalak namin ang regalong salapi.
+                <br>Gcash: Edwin Clifford Tito: 09178030034
+                <br>Bpi: Maria Alyanna Hope Bumolo : 8579349531</div>
             </div>
             <div class="note-item">
-              <div class="ni-head">Unplugged Ceremony</div>
-              <div class="ni-text">Kindly keep phones away during the ceremony. Our photographers will capture every moment.</div>
+              <div class="ni-head">Seremonyang Walang Gadget</div>
+              <div class="ni-text">Mangyaring itago ang mga telepono sa panahon ng seremonya. Ang aming mga photographer ay kukuha ng bawat sandali.</div>
             </div>
             <div class="note-item">
-              <div class="ni-head">Please Be On Time</div>
-              <div class="ni-text">The ceremony begins at 3:00 PM sharp. Arrive at least 30 minutes early.</div>
+              <div class="ni-head">Mangyaring Maging Nasa Oras</div>
+              <div class="ni-text">Magsisimula ang seremonya sa ganap na 3:00 PM. Dumating nang hindi bababa sa 30 minuto nang maaga.</div>
             </div>
-            <div class="note-item" style="border-bottom:none;">
-              <div class="ni-head">Adults-Only Reception</div>
-              <div class="ni-text">We kindly request the reception be an adults-only event so all may fully relax and celebrate.</div>
+            <div class="note-item">
+              <div class="ni-head">Reception para sa Matanda Lamang</div>
+              <div class="ni-text">Hinihiling namin na ang reception ay maging isang pang-adulto na kaganapan upang ang lahat ay ganap na makapagpahinga at magdiwang.</div>
             </div>
-          </div>
-
-          <div class="photo-block" onclick="triggerBlockUpload('block-col3')" style="margin-top:.6rem;margin-bottom:0;">
-            <div class="photo-block-placeholder" id="block-col3-ph"><svg width="28" height="28" viewBox="0 0 24 24"
-                fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg><span>add photo</span></div><input type="file" accept="image/*" id="block-col3-input"
-            style="display:none" onchange="loadBlockPhoto('block-col3', this)">
           </div>
         </div>
       </div>
 
       <!-- HASHTAG BANNER -->
-      <div class="hashtag-banner reveal"><span class="hb-label">Our Wedding Hashtag</span>
+      <div class="hashtag-banner reveal"><span class="hb-label">Ang Hashtag ng Kasal namin</span>
         <div class="hb-tag">#FordtheoneforYanna</div>
-        <div class="hb-note">Tag your photos so we can see every beautiful moment! 📸</div>
+        <div class="hb-note">I-tag ang iyong mga larawan para makita namin ang bawat magagandang sandali! 📸</div>
       </div>
+
+      <div class="photo-strip-container">
+        <div class="photo-strip-viewport">
+          <div class="photo-strip-track"></div>
+        </div>
+      </div>
+
+    <div class="photo-strip-container">
+  <div class="photo-strip-viewport">
+    <div class="photo-strip-track reverse"></div>
+  </div>
+</div>
+      
 
       <!-- BOTTOM GRID -->
       <div class="bottom-grid" id="sponsors">
-        <div class="col reveal" style="padding-bottom:0;"><span class="art-label">A Message from the Couple</span>
-          <h2 class="art-head">Final Announcement &amp; <em>Thank You</em></h2>
+
+        <!-- COL 1: MESSAGE FROM COUPLE -->
+        <div class="col reveal" style="padding-bottom:1.4rem;">
+          <span class="art-label">Isang Mensahe mula sa Mag-asawa</span>
+          <h2 class="art-head">Huling Paanyaya At <em> Pasalamat</em></h2>
           <div class="art-byline">With deepest gratitude</div>
           <div class="art-body">
-            <p>We can't wait to celebrate this special day with you. Thank you for traveling near or far to be part of
-              our story. Your love and support have meant the world to us, and we promise a night filled with laughter,
-              joy, and unforgettable memories.</p>
-            <p>After seven wonderful years of choosing each other every day, we are so ready to say "I do" in front of
-              the people who matter most to us — you.</p>
+            <p>Hindi kumpleto ang araw na ito kung wala kayo. 
+              Salamat sa paglalakbay, malapit man o malayo, upang makibahagi sa aming ligaya.</p>
+            <p>Nauna na ang "yes" pero ngayon, muli naming sasabihin ang "i do" sa 
+              harap ng Diyos - kasama kayo.</p>
           </div>
           <div class="pull-quote" style="margin:.8rem 0;">
-            <div class="pq-text">"And of course, I said yes — to a lifetime of love, laughter, and everything in
-              between."</div>
+            <div class="pq-text">"At siyempre, sinabi kong oo — sa isang habang-buhay na pag-ibig, pagtawa, at lahat ng nasa pagitan."</div>
             <div class="pq-attr">— Alyanna</div>
           </div>
           <div class="art-body">
-            <p>After the ceremony, join us for an evening of celebration at the reception. Come hungry, come happy, and
-              come ready to dance!</p>
+            <p>Pagkatapos ng seremonya, inaanyayahan namin kayong makisalo sa isang gabi ng pagdiriwang sa aming resepsyon. 
+              Dumating nang gutom, umuwi nang masaya, at maging handa sa sayawan!</p>
           </div>
           <hr class="rule-thin" style="margin:.8rem 0;">
           <div style="text-align:center;padding:.6rem 0;">
-            <div
-              style="font-family:'UnifrakturMaguntia',cursive;font-size:1.8rem;color:var(--ink);margin-bottom:.3rem;">C
-              &amp; A</div>
-            <div
-              style="font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--ink-light);">
-              Clifford & Alyanna</div>
-            <div
-              style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-top:.3rem;">
-              Mayo 17, 2026 · Batangas City</div>
+            <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.8rem;color:var(--ink);margin-bottom:.3rem;">C &amp; A</div>
+            <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--ink-light);">Clifford & Alyanna</div>
+            <div style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-top:.3rem;">Mayo 17, 2026 · Batangas City</div>
           </div>
-          <div class="rule-ornate"><span>Fun Facts</span></div>
+          <div class="rule-ornate"><span>Mga Kawili-wiling Kaalaman</span></div>
           <div style="font-size:.76rem;color:var(--ink-mid);line-height:1.8;">
-            <div
-              style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
-              <span>Taon ng Pagsasama</span><span style="font-family:'Playfair Display',serif;font-weight:700;">9
-                taon</span></div>
-            <div
-              style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
-              <span>Anak</span><span style="font-family:'Playfair Display',serif;font-weight:700;">1
-                na Lalaki</span></div>
-            <div
-              style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
-              <span>Unang Romantikong Pagtatagpo</span><span style="font-family:'Playfair Display',serif;font-weight:700;">National
-                Museum</span></div>
-            <div
-              style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
-              <span>Unang pagkakailanlan</span><span style="font-family:'Playfair Display',serif;font-weight:700;">Centro Escolar
-                University</span></div>
-            <div
-              style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);">
-              <span>Proposed</span><span style="font-family:'Playfair Display',serif;font-weight:700;">Agosto 1,
-                2022</span></div>
-          </div>
-          <div class="photo-block" onclick="triggerBlockUpload('block-bottom1')"
-            style="margin-top:.8rem;margin-bottom:0;">
-            <div class="photo-block-placeholder" id="block-bottom1-ph"><svg width="28" height="28" viewBox="0 0 24 24"
-                fill="none" stroke="rgba(249,247,242,0.5)" stroke-width="1">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg><span>add photo</span></div><input type="file" accept="image/*" id="block-bottom1-input"
-            style="display:none" onchange="loadBlockPhoto('block-bottom1', this)">
+            <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);"><span>Taon ng Pagsasama</span><span style="font-family:'Playfair Display',serif;font-weight:700;">9 taon</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);"><span>Anak</span><span style="font-family:'Playfair Display',serif;font-weight:700;">1 na Lalaki</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);"><span>Unang Romantikong Pagtatagpo</span><span style="font-family:'Playfair Display',serif;font-weight:700;">National Museum</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);"><span>Unang pagkakailanlan</span><span style="font-family:'Playfair Display',serif;font-weight:700;">Centro Escolar University</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--rule-thin);"><span>Proposed</span><span style="font-family:'Playfair Display',serif;font-weight:700;">Agosto 1, 2022</span></div>
           </div>
         </div>
+
         <div class="col-divider"></div>
 
-        <!-- VENUE + FAQ + RSVP -->
-        <div class="col reveal d1" id="venue">
+        <!-- COL 2: VENUE + FAQ + RSVP + QR -->
+        <div class="col reveal d1" id="venue" style="padding-bottom:1.4rem;">
           <span class="art-label">Saan Kami Matatagpuan</span>
-          <h2 class="art-head">Pasilidad ng &amp; <em>Venue</em></h2>
+          <h2 class="art-head">Pasilidad ng <em>Venue</em></h2>
           <div class="art-byline">Lahat ng Kailangang Detalye</div>
           <div class="venue-card" style="margin-top:.6rem;">
             <span class="vc-label">Seremonya ng Kasal</span>
             <div class="vc-name">Madre De Dios Chapel</div>
-            <div class="vc-addr">Tagaytay Highlands<br>Talisay<br>Batangas City, Philippines<br>Linggo, Mayo 17, 2026 · 3:00 PM</div>
+            <div class="vc-addr">Tagaytay Highlands<br>Talisay<br>Tagaytay City, Philippines<br>Linggo, Mayo 17, 2026 · 3:00 PM</div>
             <a href="https://maps.app.goo.gl/R6gUP7w9fUWoqxZq5" target="_blank" class="vc-link">Get Directions ↗</a>
           </div>
           <hr class="rule-dashed" style="margin:.8rem 0;">
           <div class="venue-card">
             <span class="vc-label">Resepsyon ng Pagdiriwang</span>
             <div class="vc-name">Midlands Veranda</div>
-            <div class="vc-addr">Tagaytay Highlands, Batangas City, Philippines<br>Matapos ang Munting Salu-Salo · 6:00 PM</div>
+            <div class="vc-addr">Tagaytay Highlands, Tagaytay City, Philippines<br>Matapos ang Munting Salu-Salo · 6:00 PM</div>
             <a href="https://maps.app.goo.gl/WJ2J3KYAWWjSEA4R6" target="_blank" class="vc-link">Get Directions ↗</a>
           </div>
           <hr class="rule-thin" style="margin:.8rem 0;">
           <span class="art-label" style="display:block;margin-bottom:.5rem;">Frequently Asked Questions</span>
           <div class="faq-list">
             <div class="faq-item">
-              <div class="faq-q" onclick="toggleFaq(this)"><span>Is the event kid-friendly?</span><span
-                  class="faq-icon">+</span></div>
-              <div class="faq-a">We kindly request that the reception be an adults-only event. We appreciate your
-                understanding.</div>
+              <div class="faq-q" onclick="toggleFaq(this)"><span>Kid-friendly ba ang event?</span><span class="faq-icon">+</span></div>
+              <div class="faq-a">Hinihiling namin na ang reception ay isang pang-adultong kaganapan. Pinahahalagahan namin ang iyong pag-unawa.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-q" onclick="toggleFaq(this)"><span>Is parking available?</span><span
-                  class="faq-icon">+</span></div>
-              <div class="faq-a">Yes, parking is available at both venues. Carpooling with fellow guests is encouraged.
-              </div>
+              <div class="faq-q" onclick="toggleFaq(this)"><span>Available ba ang parking?</span><span class="faq-icon">+</span></div>
+              <div class="faq-a">Oo, available ang paradahan sa parehong mga lugar. Hinihikayat ang carpooling kasama ang mga kapwa bisita.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-q" onclick="toggleFaq(this)"><span>What time should I arrive?</span><span
-                  class="faq-icon">+</span></div>
-              <div class="faq-a">Please arrive by 2:30 PM to be comfortably seated before the ceremony begins.</div>
+              <div class="faq-q" onclick="toggleFaq(this)"><span>Anong oras ako dadating?</span><span class="faq-icon">+</span></div>
+              <div class="faq-a">Mangyaring dumating ng 2:30 PM upang kumportableng maupo bago magsimula ang seremonya.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-q" onclick="toggleFaq(this)"><span>Can I post on social media?</span><span
-                  class="faq-icon">+</span></div>
-              <div class="faq-a">Absolutely! After the ceremony, share using #FordtheoneforYanna so we can find your
-                shots!</div>
+              <div class="faq-q" onclick="toggleFaq(this)"><span>Maaari ba akong mag-post sa social media?</span><span class="faq-icon">+</span></div>
+              <div class="faq-a">Talagang-talaga! Pagkatapos ng seremonya, ibahagi gamit ang #FordtheoneforYanna para mahanap namin ang iyong mga kuha!</div>
             </div>
           </div>
+
+          <!-- FIX 3: RSVP box -->
           <div class="rsvp-box" id="rsvp" style="margin-top:1rem;">
-            <div class="rb-title">Will You Join Us?</div>
-            <div class="rb-body">We would be truly honoured to have you celebrate this special day. Kindly let us know
-              if you'll be attending.</div><span class="rb-deadline">Respond by Abril 25, 2026 · Strictly +1</span><a
-              href="https://forms.gle/im9zWVK9ULDw9qgq6" target="_blank" rel="noopener" class="rb-btn">RSVP Now ↗</a>
+            <div class="rb-title">Sasamahan Mo Kami?</div>
+            <div class="rb-body">Talagang ikalulugod namin na ipagdiwang ninyo ang espesyal na araw na ito. Mangyaring ipaalam sa amin kung dadalo ka.</div>
+            <span class="rb-deadline">Sumagot bago ang Abril 25, 2026 · Mahigpit na walang +1</span>
+            <a href="https://forms.gle/EYhHsxDw8MjTPgTDA" target="_blank" rel="noopener" class="rb-btn">RSVP Now ↗</a>
+          </div>
+
+          <!-- FIX 3: QR SEAT FINDER — new section below RSVP -->
+          <div class="qr-seat-section" id="seat-finder">
+            <div class="qr-title">Tagahanap ng upuan</div>
+            <div class="qr-subtitle">I-scan o I-tap upang mahanap ang iyong nakatalagang upuan</div>
+            <div class="qr-canvas-wrap">
+              <canvas id="qr-canvas" width="160" height="160"></canvas>
+            </div>
+            <a href="https://byloveandcrafts.github.io/cliffordandalyannaseatfinder/" target="_blank" rel="noopener" class="qr-tap-btn" id="qr-open-btn">Hanapin ang Aking Upuan ↗</a>
           </div>
         </div>
+
         <div class="col-divider"></div>
 
-        <!-- SPONSORS -->
-        <div class="col reveal d2" style="padding-bottom:0;">
+        <!-- COL 3: SPONSORS -->
+        <div class="col reveal d2" style="padding-bottom:1.4rem;">
           <span class="art-label">May Buong pagmamahal at gabay</span>
           <h2 class="art-head">Mga Taga Pagpatunay <em>ng Kasal</em></h2>
-          <div class="art-byline">Mangunguna ng seremonya:<br><h1>Bishop Elmer Mangalinao</h1></div>
+          <div class="art-byline">Mangunguna ng seremonya:<br><strong style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;letter-spacing:.02em;">Bishop Elmer Mangalinao</strong></div>
           <table class="sponsor-table">
             <thead>
               <tr>
@@ -2598,43 +2376,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Dr. Renato Allas</td>
-                <td>Dr. Agustina T. Allas</td>
-              </tr>
-              <tr>
-                <td>Mr. Cenon Asuncion</td>
-                <td>Mrs. Mary Gay T. Asuncion</td>
-              </tr>
-              <tr>
-                <td>Mr. Manuel Tamayo</td>
-                <td>Mrs. Narissa P. Tamayo</td>
-              </tr>
-              <tr>
-                <td>Cong. Atty. Timothy Cayton</td>
-                <td>Mrs. Andrea B. Alfaro</td>
-              </tr>
-              <tr>
-                <td>Governor Jose V. Gambito</td>
-                <td>Councilor Doris B. Binwag</td>
-              </tr>
-              <tr>
-                <td>Mayor Atty. Philip A. Dacayo</td>
-                <td>Mrs. Gloria T. DeGuzman</td>
-              </tr>
-              <tr>
-                <td>Mr. Rolando A. Fariñas</td>
-                <td>Mrs. Amy Padilla</td>
-              </tr>
-              <tr>
-                <td>Mr. Carlos D. Luglug</td>
-                <td>Mrs. Sylvia A. Bernardo</td>
-              </tr>
+              <tr><td>Dr. Renato Allas</td><td>Dr. Agustina T. Allas</td></tr>
+              <tr><td>G. Cenon Asuncion</td><td>Gng. Mary Gay T. Asuncion</td></tr>
+              <tr><td>G. Manuel Tamayo</td><td>Gng. Narissa P. Tamayo</td></tr>
+              <tr><td>Cong. Atty. Timothy Cayton</td><td>Gng. Andrea B. Alfaro</td></tr>
+              <tr><td>Governor Jose V. Gambito</td><td>Councilor Doris B. Binwag</td></tr>
+              <tr><td>Mayor Atty. Philip A. Dacayo</td><td>Gng. Gloria T. DeGuzman</td></tr>
+              <tr><td>G. Rolando A. Fariñas</td><td>Gng. Amy Padilla</td></tr>
+              <tr><td>G. Carlos D. Luglug</td><td>Gng. Sylvia A. Bernardo</td></tr>
             </tbody>
           </table>
           <hr class="rule-thin" style="margin:.8rem 0;">
-          <span class="art-label secondary-sponsors-label" style="display:block;margin-bottom:.5rem;">Secondary Sponsors</span>
-          <div class="roster" style="font-size:.75rem;">
+          <span class="art-label secondary-sponsors-label" style="display:block;margin-bottom:.5rem;">Mga Pangalawang Tagapagtaguyod</span>
+
+          <!-- Desktop view: classic roster lines -->
+          <div class="roster desktop-roster" style="font-size:.75rem;">
             <span class="roster-head">Tagapag Dala ng Singsing</span>
             <span class="roster-name" style="font-size:.78rem;">Matteo Makisig B. Tito</span>
             <span class="roster-name" style="font-size:.78rem;">Kaizen Christopher R. Tito</span>
@@ -2647,98 +2403,356 @@
             <span class="roster-head" style="margin-top:.5rem;">Tagapagdala ng Arras</span>
             <span class="roster-name" style="font-size:.78rem;">Gabriel Alberto R. Bumolo</span>
             <span class="roster-head" style="margin-top:.5rem;">Mga Tagapagdala ng Belo</span>
-            <span class="roster-name" style="font-size:.78rem;">Ms. Kathleen May V. Corpuz at Mr. Clinton Albert C. Bumolo</span>
+            <span class="roster-name" style="font-size:.78rem;">Bb. Kathleen May V. Corpuz at G. Clinton Albert C. Bumolo</span>
             <span class="roster-head" style="margin-top:.5rem;">Mga Tagapagdala ng Kandila</span>
-            <span class="roster-name" style="font-size:.78rem;">Dr. Maria Alyzza Joy C. Bumolo at Mr. Justin Inno V. Corpuz</span>
+            <span class="roster-name" style="font-size:.78rem;">Dr. Maria Alyzza Joy C. Bumolo at G. Justin Inno V. Corpuz</span>
             <span class="roster-head" style="margin-top:.5rem;">Mga Tagapagdala ng Yugal</span>
-            <span class="roster-name" style="font-size:.78rem;">Atty. Aldrine Llyod C. Bumolo at Ms. Mabelle B. Morales</span>
+            <span class="roster-name" style="font-size:.78rem;">Atty. Aldrine Llyod C. Bumolo at Bb. Mabelle B. Morales</span>
+          </div>
+
+          <!-- Mobile view: box grid layout (shown only on mobile via CSS) -->
+          <div class="mobile-sponsors-boxes" style="display:none;">
+
+            <div style="margin-bottom:.6rem;">
+              <div class="roster-head" style="text-align:center;">Tagapag Dala ng Singsing</div>
+              <div class="secondary-sponsors-grid">
+                <div class="roster-name-box">Matteo Makisig B. Tito</div>
+                <div class="roster-name-box">Kaizen Christopher R. Tito</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:.6rem;">
+              <div class="roster-head" style="text-align:center;">Tagapagdala ng Bibliya</div>
+              <div class="secondary-sponsors-grid">
+                <div class="roster-name-box full-width">Sebastian Adriane A. Bumolo</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:.6rem;">
+              <div class="roster-head" style="text-align:center;">Mga Tagapagdala ng Bulaklak</div>
+              <div class="secondary-sponsors-grid">
+                <div class="roster-name-box">Shirina Albertha R. Bumolo</div>
+                <div class="roster-name-box">Ma. Athalia Ysabel P. Corpuz</div>
+                <div class="roster-name-box full-width">Carmela Ysabelle B. Almuete</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:.6rem;">
+              <div class="roster-head" style="text-align:center;">Tagapagdala ng Arras</div>
+              <div class="secondary-sponsors-grid">
+                <div class="roster-name-box full-width">Gabriel Alberto R. Bumolo</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:.6rem;">
+              <div class="roster-head" style="text-align:center;">Mga Tagapagdala ng Belo</div>
+              <div class="secondary-sponsors-grid">
+                <div class="roster-name-box full-width">Bb. Kathleen May V. Corpuz at G. Clinton Albert C. Bumolo</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:.6rem;">
+              <div class="roster-head" style="text-align:center;">Mga Tagapagdala ng Kandila</div>
+              <div class="secondary-sponsors-grid">
+                <div class="roster-name-box full-width">Dr. Maria Alyzza Joy C. Bumolo at G. Justin Inno V. Corpuz</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:.6rem;">
+              <div class="roster-head" style="text-align:center;">Mga Tagapagdala ng Yugal</div>
+              <div class="secondary-sponsors-grid">
+                <div class="roster-name-box full-width">Atty. Aldrine Llyod C. Bumolo at Bb. Mabelle B. Morales</div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
 
       <div class="newspaper-footer">
-        <span class="nf-copy">Issue No. 1 · Maligaya Magpakailan Man · Est. 2026</span>
+        <span class="nf-copy">Isyu No. 1 · Maligaya Magpakailan Man · Est. 2026</span>
         <span class="nf-mark">C&A</span>
-        <span class="nf-love">Made with love ♥ · We can't wait to celebrate with you</span>
+        <span class="nf-love">Ginawa nang may pagmamahal · ♥ · Hindi na kami makapaghintay na magdiwang kasama ka</span>
       </div>
     </div>
   </div>
 
-  <div id="music-player"><span id="music-label">♪ Panalangin — APO Hiking Society</span><button id="music-toggle"
-      aria-label="Toggle music"><svg id="icon-play" viewBox="0 0 24 24">
-        <path d="M8 5.14v14l11-7-11-7z" />
-      </svg><svg id="icon-pause" viewBox="0 0 24 24" style="display:none">
-        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-      </svg></button></div><audio id="bg-music" loop preload="auto">
+  <div id="music-player">
+    <span id="music-label">♪ Panalangin — APO Hiking Society</span>
+    <button id="music-toggle" aria-label="Toggle music">
+      <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5.14v14l11-7-11-7z" /></svg>
+      <svg id="icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
+    </button>
+  </div>
+
+  <audio id="bg-music" loop preload="auto">
     <source src="https://res.cloudinary.com/dmcnpy20v/video/upload/v1774670474/APO_Hiking_Society_-_Panalangin_Official_Lyric_Video_pkwcfb.mp3" type="audio/mpeg">
   </audio>
 
   <script>
+    /* ── INTRO UNROLL ── */
     document.addEventListener('DOMContentLoaded', () => {
-    const wrapper = document.getElementById('newspaper-intro-wrapper');
-    const container = document.getElementById('physical-paper-container');
-    const cylinder = document.getElementById('paper-cylinder');
-    const unrollWindow = document.getElementById('unroll-window');
-    const btnUnroll = document.getElementById('btn-unroll');
-    const audio = document.getElementById('audio');
-
-    if(!wrapper) return;
-
-    let isUnrolled = false;
-    document.body.style.overflow = 'hidden';
-
-    wrapper.addEventListener('click', () => {
-      if(isUnrolled) return; 
-      isUnrolled = true; 
-
-      if(audio) {
-        audio.volume = 0.45;
-        audio.play().catch(()=>{});
-      }
-
-      btnUnroll.style.opacity = '0';
-
-      // Unroll
-      unrollWindow.style.height = '100%';
-      cylinder.style.top = 'calc(100% - 30px)';
-
-      // I increased the wait time to 4.5 seconds so guests 
-      // have enough time to look at your beautiful photo and read the quote
-      setTimeout(() => {
-        container.style.transform = 'translateY(120vh) rotate(-5deg)';
-        wrapper.style.backgroundColor = 'transparent';
-
+      const wrapper = document.getElementById('newspaper-intro-wrapper');
+      const container = document.getElementById('physical-paper-container');
+      const cylinder = document.getElementById('paper-cylinder');
+      const unrollWindow = document.getElementById('unroll-window');
+      const btnUnroll = document.getElementById('btn-unroll');
+      const audio = document.getElementById('bg-music');
+      if (!wrapper) return;
+      let isUnrolled = false;
+      document.body.style.overflow = 'hidden';
+      wrapper.addEventListener('click', () => {
+        if (isUnrolled) return;
+        isUnrolled = true;
+        if (audio) { audio.volume = 0.45; audio.play().catch(() => {}); }
+        btnUnroll.style.opacity = '0';
+        unrollWindow.style.height = '100%';
+        cylinder.style.top = 'calc(100% - 30px)';
         setTimeout(() => {
-          wrapper.remove();
-          document.body.style.overflow = ''; 
-        }, 1200);
-
-      }, 4500); 
+          container.style.transform = 'translateY(120vh) rotate(-5deg)';
+          wrapper.style.backgroundColor = 'transparent';
+          setTimeout(() => { wrapper.remove(); document.body.style.overflow = ''; }, 1200);
+        }, 4500);
+      });
     });
-  });
+
+    /* ── NAV ── */
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); document.getElementById('hamburger').classList.toggle('open'); }
     function closeMenu() { document.getElementById('navLinks').classList.remove('open'); document.getElementById('hamburger').classList.remove('open'); }
+
+    /* ── COUNTDOWN ── */
     const WEDDING = new Date('2026-05-17T15:00:00+08:00');
-    function tick() { const diff = WEDDING - new Date(); if (diff <= 0) { document.querySelector('.countdown-strip').innerHTML = '<p style="font-family:Playfair Display,serif;font-style:italic;font-size:1.1rem;color:var(--ink);padding:.6rem 1rem;text-align:center;width:100%;">Today is the day! 🥂</p>'; return; } const pad = n => String(Math.floor(n)).padStart(2, '0'); document.getElementById('cd-d').textContent = pad(diff / 86400000); document.getElementById('cd-h').textContent = pad((diff % 86400000) / 3600000); document.getElementById('cd-m').textContent = pad((diff % 3600000) / 60000); document.getElementById('cd-s').textContent = pad((diff % 60000) / 1000); } tick(); setInterval(tick, 1000);
-    const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .08 }); document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    const audio = document.getElementById('bg-music'); const btn = document.getElementById('music-toggle'); const iPlay = document.getElementById('icon-play'); const iPause = document.getElementById('icon-pause'); let started = false;
+    function tick() {
+      const diff = WEDDING - new Date();
+      if (diff <= 0) { document.querySelector('.countdown-strip').innerHTML = '<p style="font-family:Playfair Display,serif;font-style:italic;font-size:1.1rem;color:var(--ink);padding:.6rem 1rem;text-align:center;width:100%;">Today is the day! 🥂</p>'; return; }
+      const pad = n => String(Math.floor(n)).padStart(2, '0');
+      document.getElementById('cd-d').textContent = pad(diff / 86400000);
+      document.getElementById('cd-h').textContent = pad((diff % 86400000) / 3600000);
+      document.getElementById('cd-m').textContent = pad((diff % 3600000) / 60000);
+      document.getElementById('cd-s').textContent = pad((diff % 60000) / 1000);
+    }
+    tick(); setInterval(tick, 1000);
+
+    /* ── REVEAL ── */
+    const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .08 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* ── MUSIC ── */
+    const audio = document.getElementById('bg-music');
+    const btn = document.getElementById('music-toggle');
+    const iPlay = document.getElementById('icon-play');
+    const iPause = document.getElementById('icon-pause');
+    let started = false;
     function setPlay(p) { iPlay.style.display = p ? 'none' : ''; iPause.style.display = p ? '' : 'none'; p ? btn.classList.add('playing') : btn.classList.remove('playing'); }
-    btn.addEventListener('click', () => { if (audio.paused) { audio.volume = .45; audio.play().then(() => setPlay(true)).catch(() => { }); } else { audio.pause(); setPlay(false); } started = true; });
-    function tryAuto() { if (started) return; audio.volume = .45; audio.play().then(() => { setPlay(true); started = true; }).catch(() => { }); } document.addEventListener('click', tryAuto, { once: true }); document.addEventListener('scroll', tryAuto, { once: true }); document.addEventListener('touchstart', tryAuto, { once: true });
+    btn.addEventListener('click', () => {
+      if (audio.paused) { audio.volume = .45; audio.play().then(() => setPlay(true)).catch(() => {}); }
+      else { audio.pause(); setPlay(false); }
+      started = true;
+    });
+    function tryAuto() { if (started) return; audio.volume = .45; audio.play().then(() => { setPlay(true); started = true; }).catch(() => {}); }
+    document.addEventListener('click', tryAuto, { once: true });
+    document.addEventListener('scroll', tryAuto, { once: true });
+    document.addEventListener('touchstart', tryAuto, { once: true });
+
+    /* ── FAQ ── */
     function toggleFaq(el) { const item = el.closest('.faq-item'); const open = item.classList.contains('open'); document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open')); if (!open) item.classList.add('open'); }
+
+    /* ── CAROUSEL ── */
     let carouselIndex = 0; const TOTAL_SLIDES = 8; let carouselAutoTimer = null;
     function carouselUpdateUI() { document.getElementById('carouselTrack').style.transform = `translateX(-${carouselIndex * 100}%)`; document.querySelectorAll('.carousel-dot').forEach((d, i) => { d.classList.toggle('active', i === carouselIndex); }); }
     function carouselMove(dir) { carouselIndex = (carouselIndex + dir + TOTAL_SLIDES) % TOTAL_SLIDES; carouselUpdateUI(); resetCarouselAuto(); }
     function carouselGoTo(idx) { carouselIndex = idx; carouselUpdateUI(); resetCarouselAuto(); }
     function resetCarouselAuto() { if (carouselAutoTimer) clearInterval(carouselAutoTimer); carouselAutoTimer = setInterval(() => carouselMove(1), 4000); }
     carouselAutoTimer = setInterval(() => carouselMove(1), 4000);
-    let cTouchStartX = 0; const cViewport = document.getElementById('carouselViewport'); cViewport.addEventListener('touchstart', e => { cTouchStartX = e.touches[0].clientX; }, { passive: true }); cViewport.addEventListener('touchend', e => { const diff = cTouchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 40) carouselMove(diff > 0 ? 1 : -1); }, { passive: true });
+    let cTouchStartX = 0;
+    const cViewport = document.getElementById('carouselViewport');
+    cViewport.addEventListener('touchstart', e => { cTouchStartX = e.touches[0].clientX; }, { passive: true });
+    cViewport.addEventListener('touchend', e => { const diff = cTouchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 40) carouselMove(diff > 0 ? 1 : -1); }, { passive: true });
     function triggerCarouselUpload(n) { document.getElementById('cupload-' + n).click(); }
-    function loadCarouselPhoto(n, input) { if (!input.files || !input.files[0]) return; const file = input.files[0]; const reader = new FileReader(); reader.onload = function (e) { const slide = document.getElementById('cslide-' + n); const ph = slide.querySelector('.carousel-slide-placeholder'); if (ph) ph.remove(); let img = slide.querySelector('img'); if (!img) { img = document.createElement('img'); slide.insertBefore(img, slide.querySelector('.carousel-num')); } img.src = e.target.result; img.alt = 'Photo ' + n; slide.classList.add('has-photo'); carouselGoTo(n - 1); }; reader.readAsDataURL(file); }
+    function applyCarouselPhoto(slide, src, alt) {
+      const ph = slide.querySelector('.carousel-slide-placeholder');
+      if (ph) ph.style.display = 'none';
+      let img = slide.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;';
+        slide.insertBefore(img, slide.querySelector('.carousel-num'));
+      }
+      img.src = src; img.alt = alt || '';
+      slide.classList.add('has-photo');
+    }
+    function loadCarouselPhoto(n, input) {
+      if (!input.files || !input.files[0]) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const slide = document.getElementById('cslide-' + n);
+        applyCarouselPhoto(slide, e.target.result, 'Photo ' + n);
+        carouselGoTo(n - 1);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
     function triggerBlockUpload(id) { document.getElementById(id + '-input').click(); }
-    function loadBlockPhoto(id, input) { if (!input.files || !input.files[0]) return; const file = input.files[0]; const reader = new FileReader(); reader.onload = function (e) { const block = document.getElementById(id + '-ph').closest('.photo-block'); const ph = block.querySelector('.photo-block-placeholder'); if (ph) ph.remove(); let img = block.querySelector('img'); if (!img) { img = document.createElement('img'); block.insertBefore(img, block.firstChild); } img.src = e.target.result; img.alt = 'Photo'; }; reader.readAsDataURL(file); }
-    document.addEventListener('DOMContentLoaded', () => { const overlay = document.getElementById('envelope-overlay'); const trigger = document.getElementById('env-trigger'); document.body.style.overflow = 'hidden'; trigger.addEventListener('click', () => { audio.volume = .45; audio.play().then(() => setPlay(true)).catch(() => { }); started = true; setTimeout(() => { overlay.classList.add('hidden'); document.body.style.overflow = ''; }, 900); }); });
+    function loadBlockPhoto(id, input) {
+      if (!input.files || !input.files[0]) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const block = document.getElementById(id + '-ph').closest('.photo-block');
+        const ph = block.querySelector('.photo-block-placeholder'); if (ph) ph.remove();
+        let img = block.querySelector('img');
+        if (!img) { img = document.createElement('img'); block.insertBefore(img, block.firstChild); }
+        img.src = e.target.result; img.alt = 'Photo';
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+
+    function initBlockPhotosFromCloudinary() {
+  document.querySelectorAll('.photo-block[data-src]').forEach(block => {
+    const url = block.getAttribute('data-src');
+    if (!url || url === '') return;
+    const ph = block.querySelector('.photo-block-placeholder');
+    if (ph) ph.style.display = 'none';
+    let img = block.querySelector('img');
+    if (!img) {
+      img = document.createElement('img');
+      img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;';
+      block.insertBefore(img, block.firstChild);
+    }
+    img.src = url;
+  });
+}
+document.addEventListener('DOMContentLoaded', initBlockPhotosFromCloudinary);
+
+    /* ── QR CODE GENERATOR ── */
+    // QR code pointing to the RSVP / seat finder URL
+    (function generateQR() {
+      const QR_URL = 'https://byloveandcrafts.github.io/cliffordandalyannaseatfinder/';
+      const canvas = document.getElementById('qr-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const SIZE = 160;
+      canvas.width = SIZE; canvas.height = SIZE;
+
+      // Use QRCode.js via CDN (loaded dynamically)
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      script.onload = function () {
+        // Clear canvas approach — use a temp div then draw to canvas
+        const tempDiv = document.createElement('div');
+        tempDiv.style.cssText = 'position:absolute;left:-9999px;top:-9999px;';
+        document.body.appendChild(tempDiv);
+
+        const qr = new QRCode(tempDiv, {
+          text: QR_URL,
+          width: SIZE,
+          height: SIZE,
+          colorDark: '#0d0d0d',
+          colorLight: '#f9f7f2',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Wait for QR image to render, then copy to our canvas
+        setTimeout(() => {
+          const img = tempDiv.querySelector('img') || tempDiv.querySelector('canvas');
+          if (img) {
+            if (img.tagName === 'CANVAS') {
+              ctx.drawImage(img, 0, 0, SIZE, SIZE);
+            } else {
+              const i = new Image();
+              i.onload = () => { ctx.drawImage(i, 0, 0, SIZE, SIZE); };
+              i.src = img.src;
+            }
+          }
+          document.body.removeChild(tempDiv);
+
+          // Add decorative border frame inside the QR
+          ctx.strokeStyle = '#0d0d0d';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(1, 1, SIZE - 2, SIZE - 2);
+        }, 300);
+      };
+      script.onerror = function () {
+        // Fallback: draw a simple placeholder if CDN fails
+        ctx.fillStyle = '#f9f7f2';
+        ctx.fillRect(0, 0, SIZE, SIZE);
+        ctx.fillStyle = '#0d0d0d';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('QR CODE', SIZE / 2, SIZE / 2 - 8);
+        ctx.font = '9px sans-serif';
+        ctx.fillText('Tap button below', SIZE / 2, SIZE / 2 + 8);
+        ctx.fillText('to find your seat', SIZE / 2, SIZE / 2 + 22);
+      };
+      document.head.appendChild(script);
+    })();
+
+    /* ── MOBILE: Show/hide correct sponsor view ── */
+    function applyMobileView() {
+      const isMobile = window.innerWidth <= 720;
+      const desktop = document.querySelector('.desktop-roster');
+      const mobile = document.querySelector('.mobile-sponsors-boxes');
+      if (desktop && mobile) {
+        desktop.style.display = isMobile ? 'none' : '';
+        mobile.style.display = isMobile ? '' : 'none';
+      }
+    }
+    applyMobileView();
+    window.addEventListener('resize', applyMobileView);
+
+    /* ── INFINITE MOVING PHOTO STRIP ── */
+    /* ── INFINITE MOVING PHOTO STRIP ── */
+const PHOTOS = [
+  {src: '5.jpeg',  alt: 'Portrait Image',  type: 'portrait'},
+  {src: '6.jpeg',  alt: 'Portrait Image',  type: 'portrait'},
+  {src: '11.jpeg', alt: 'Portrait Image',  type: 'portrait'},
+  {src: '1.jpeg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '2.jpeg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '3.jpeg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '7.jpeg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '8.jpeg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '9.jpeg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '10.jpeg', alt: 'Landscape Image', type: 'landscape'},
+  {src: '12.jpeg', alt: 'Landscape Image', type: 'landscape'},
+];
+
+function initMovingPhotoStrip() {
+  // Find ALL photo strip tracks on the page using the class
+  const tracks = document.querySelectorAll('.photo-strip-track');
+  if (tracks.length === 0) return;
+
+  // Loop through each track and populate it
+  tracks.forEach(track => {
+    track.innerHTML = '';
+    
+    const createItems = () => PHOTOS.map(photo => {
+      const div = document.createElement('div');
+      div.className = 'photo-strip-item ' + photo.type;
+      const img = document.createElement('img');
+      img.src = photo.src;
+      img.alt = photo.alt;
+      img.onerror = function() {
+        this.onerror = null;
+        this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="100%25" height="100%25" fill="%232a2a2a"/><text x="50%25" y="50%25" font-family="sans-serif" font-size="16" fill="%23888" text-anchor="middle" dominant-baseline="middle">ADD PHOTO</text></svg>';
+      };
+      div.appendChild(img);
+      return div;
+    });
+
+    // Append the items twice to create the seamless infinite loop
+    createItems().forEach(el => track.appendChild(el));
+    createItems().forEach(el => track.appendChild(el));
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initMovingPhotoStrip);
+
+function initCarouselFromCloudinary() {
+  document.querySelectorAll('.carousel-slide[data-src]').forEach(slide => {
+    const url = slide.getAttribute('data-src');
+    if (!url || url === '') return;
+    applyCarouselPhoto(slide, url, '');
+  });
+}
+document.addEventListener('DOMContentLoaded', initCarouselFromCloudinary);
   </script>
 </body>
-
 </html>
