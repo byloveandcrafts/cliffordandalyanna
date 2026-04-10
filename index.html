@@ -7,7 +7,8 @@
   <title>Clifford & Alyanna — Wedding Newspaper</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@200;300;400;500&display=swap"
-    rel="stylesheet">
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
   <style>
     :root {
       --ink: #0d0d0d;
@@ -459,13 +460,21 @@
     .hero-photo-placeholder svg { opacity: .12; }
 
     .hero-caption-band {
-      position: relative;
+      position: absolute;
       z-index: 2;
       background: var(--ink);
       color: var(--paper);
       width: 100%;
       padding: .8rem 1.5rem;
       text-align: center;
+      bottom: 0;
+      transform: translateY(100%);
+      transition: transform 0.35s ease;
+    }
+
+
+    .hero-center:hover .hero-caption-band {
+      transform: translateY(0);
     }
 
     .hcb-names {
@@ -1368,7 +1377,7 @@
     }
 
     .nf-copy { font-size: .62rem; color: var(--ink-faint); letter-spacing: .12em; }
-    .nf-mark { font-family: 'UnifrakturMaguntia', cursive; font-size: 1.1rem; color: var(--ink-light); }
+    .nf-mark { font-family: 'Brush Script MT', cursive; font-size: 1.1rem; color: var(--ink-light); }
     .nf-love { font-family: 'IM Fell English', serif; font-style: italic; font-size: .78rem; color: var(--ink-faint); }
 
     /* ── MUSIC PLAYER ── */
@@ -1451,7 +1460,7 @@
       backdrop-filter: blur(12px);
     }
 
-    .nav-mark { font-family: 'UnifrakturMaguntia', cursive; font-size: 1.1rem; color: var(--ink); }
+    .nav-mark { font-family: 'Brush Script MT', cursive; font-size: 1.1rem; color: var(--ink); }
 
     .nav-links { display: flex; gap: 1.2rem; }
 
@@ -1529,6 +1538,9 @@
       .hero-strip { grid-template-columns: 1fr; }
       .hero-side { display: none; }
       .hero-side:last-child { display: none; }
+      .hero-caption-band {
+       transform: translateY(0) !important;
+      }
 
       .body-grid {
         display: block;
@@ -1929,7 +1941,7 @@
         </div>
         <div class="mast-name-block">
           <div class="mast-edition">Ipinagdiriwang ang Paglalakbay ng</div>
-          <div class="mast-title">Ipinagdiriwang ang Pagpili sa Isa't Isa, Muli</div>
+          <div class="mast-title">Ipinagdiriwang ang Pagpili sa Isa't Isa</div>
           <div class="mast-subtitle">Isang Imbitasyon sa Kasal at Souvenir Program</div>
         </div>
         <div class="mast-bottom-bar">
@@ -1946,7 +1958,7 @@
           <div>
             <div class="hs-label">Lokasyon ng Kaganapan</div>
             <div class="hs-value">Madre de Dios Chapel</div>
-            <div class="hs-note">Tagaytay Highlands, Talisay, Batangas</div>
+            <div class="hs-note">Tagaytay Highlands</div>
           </div>
           <div>
             <div class="hs-label">Petsa ng Kasal</div>
@@ -2013,7 +2025,7 @@
               Parang matagal na silang pinagtagpo, ngunit hinintay ng tadhana ang tamang panahon.</p>
           </div>
           <div class="pull-quote">
-            <div class="pq-text">"Dalwang puso, Isang kwento, Isang libong sandaling puno ng pag-ibig"</div>
+            <div class="pq-text">"Hindi ka lang paborito kong tao; ikaw ang paborito kong lugar, paborito kong sandali, at paborito kong damdamin."</div>
             <div class="pq-attr">— Clifford</div>
           </div>
           <div class="art-body">
@@ -2107,16 +2119,15 @@
               <div class="carousel-dot" onclick="carouselGoTo(6)"></div>
               <div class="carousel-dot" onclick="carouselGoTo(7)"></div>
             </div>
-            <div class="carousel-caption">Click any frame to add your photo · Engagement &amp; Family shots welcome</div>
           </div>
-          <span class="art-label">Counting Down</span>
-          <h2 class="art-head large">The Wedding <em>Itinerary</em></h2>
-          <div class="art-byline">What to Expect on the Big Day</div>
+          <span class="art-label">Papalapit sa simula ng aming habang-buhay</span>
+          <h2 class="art-head large">Daloy ng <em>Pagdiriwang</em></h2>
+          <div class="art-byline">Mga  Gaganapin sa Araw ng Kasal</div>
           <div class="countdown-strip" style="margin-bottom:1rem;">
-            <div class="cd-cell"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Days</span></div>
-            <div class="cd-cell"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Hours</span></div>
-            <div class="cd-cell"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Mins</span></div>
-            <div class="cd-cell"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">Secs</span></div>
+            <div class="cd-cell"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Araw</span></div>
+            <div class="cd-cell"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Oras</span></div>
+            <div class="cd-cell"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Minuto</span></div>
+            <div class="cd-cell"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">Segundo</span></div>
           </div>
           <div class="rule-ornate"><span>Programme</span></div>
           <div class="itinerary" id="schedule">
@@ -2172,7 +2183,7 @@
               </div>
               <div class="attire-row" style="border-bottom:none;">
                 <div class="attire-role" style="color:#800020;font-weight:600;">Iwasan</div>
-                <div class="attire-desc" style="color:var(--ink-faint);font-size:.68rem;">Puti, Off-White, Ivory at matingkad na kulay o prints</div>
+                <div class="attire-desc" style="color:var(--ink-faint);font-size:.68rem;">Maong, Puti, Off-White, Ivory at matingkad na kulay o prints</div>
               </div>
             </div>
           </div>
@@ -2268,7 +2279,7 @@
         <div class="col reveal" style="padding-bottom:1.4rem;">
           <span class="art-label">Isang Mensahe mula sa Mag-asawa</span>
           <h2 class="art-head">Huling Paanyaya At <em> Pasalamat</em></h2>
-          <div class="art-byline">With deepest gratitude</div>
+          <div class="art-byline">Taos-pusong Pasasalamat</div>
           <div class="art-body">
             <p>Hindi kumpleto ang araw na ito kung wala kayo. 
               Salamat sa paglalakbay, malapit man o malayo, upang makibahagi sa aming ligaya.</p>
@@ -2276,7 +2287,7 @@
               harap ng Diyos - kasama kayo.</p>
           </div>
           <div class="pull-quote" style="margin:.8rem 0;">
-            <div class="pq-text">"At siyempre, sinabi kong oo — sa isang habang-buhay na pag-ibig, pagtawa, at lahat ng nasa pagitan."</div>
+            <div class="pq-text">"Hindi ako nandito dahil perpekto ang lahat - naandito ako dahil naging matatag ka, kahit ako hindi. Minahal mo ako sa lahat ng mood ko, sa lahat ng overthingking ko."</div>
             <div class="pq-attr">— Alyanna</div>
           </div>
           <div class="art-body">
@@ -2285,9 +2296,9 @@
           </div>
           <hr class="rule-thin" style="margin:.8rem 0;">
           <div style="text-align:center;padding:.6rem 0;">
-            <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.8rem;color:var(--ink);margin-bottom:.3rem;">C &amp; A</div>
+            <div style="font-family:'Brush Script MT',cursive;font-size:1.8rem;color:var(--ink);margin-bottom:.3rem;">C &amp; A</div>
             <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--ink-light);">Clifford & Alyanna</div>
-            <div style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-top:.3rem;">Mayo 17, 2026 · Batangas City</div>
+            <div style="font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-top:.3rem;">Mayo 17, 2026 · Tagaytay Highlands</div>
           </div>
           <div class="rule-ornate"><span>Mga Kawili-wiling Kaalaman</span></div>
           <div style="font-size:.76rem;color:var(--ink-mid);line-height:1.8;">
@@ -2304,27 +2315,27 @@
         <!-- COL 2: VENUE + FAQ + RSVP + QR -->
         <div class="col reveal d1" id="venue" style="padding-bottom:1.4rem;">
           <span class="art-label">Saan Kami Matatagpuan</span>
-          <h2 class="art-head">Pasilidad ng <em>Venue</em></h2>
+          <h2 class="art-head">Pasilidad ng <em>Pagdarausan</em></h2>
           <div class="art-byline">Lahat ng Kailangang Detalye</div>
           <div class="venue-card" style="margin-top:.6rem;">
             <span class="vc-label">Seremonya ng Kasal</span>
             <div class="vc-name">Madre De Dios Chapel</div>
             <div class="vc-addr">Tagaytay Highlands<br>Talisay<br>Tagaytay City, Philippines<br>Linggo, Mayo 17, 2026 · 3:00 PM</div>
-            <a href="https://maps.app.goo.gl/R6gUP7w9fUWoqxZq5" target="_blank" class="vc-link">Get Directions ↗</a>
+            <a href="https://maps.app.goo.gl/7HxKQzYvACNnGZfW9" target="_blank" class="vc-link">Tingnan ang Direksyon ↗</a>
           </div>
           <hr class="rule-dashed" style="margin:.8rem 0;">
           <div class="venue-card">
             <span class="vc-label">Resepsyon ng Pagdiriwang</span>
             <div class="vc-name">Midlands Veranda</div>
             <div class="vc-addr">Tagaytay Highlands, Tagaytay City, Philippines<br>Matapos ang Munting Salu-Salo · 6:00 PM</div>
-            <a href="https://maps.app.goo.gl/WJ2J3KYAWWjSEA4R6" target="_blank" class="vc-link">Get Directions ↗</a>
+            <a href="https://maps.app.goo.gl/LdT3HBpFzxYmF2C38" target="_blank" class="vc-link">Tingnan ang Direksyon ↗</a>
           </div>
           <hr class="rule-thin" style="margin:.8rem 0;">
           <span class="art-label" style="display:block;margin-bottom:.5rem;">Frequently Asked Questions</span>
           <div class="faq-list">
             <div class="faq-item">
               <div class="faq-q" onclick="toggleFaq(this)"><span>Kid-friendly ba ang event?</span><span class="faq-icon">+</span></div>
-              <div class="faq-a">Hinihiling namin na ang reception ay isang pang-adultong kaganapan. Pinahahalagahan namin ang iyong pag-unawa.</div>
+              <div class="faq-a">Paalaala: Para lamang sa mga nakatatanda ang pagtitipon. Tanging mga batang kabilang sa entourage ang papayagan. Mahigpit na ipinatutupad ang RSVP.</div>
             </div>
             <div class="faq-item">
               <div class="faq-q" onclick="toggleFaq(this)"><span>Available ba ang parking?</span><span class="faq-icon">+</span></div>
@@ -2336,7 +2347,8 @@
             </div>
             <div class="faq-item">
               <div class="faq-q" onclick="toggleFaq(this)"><span>Maaari ba akong mag-post sa social media?</span><span class="faq-icon">+</span></div>
-              <div class="faq-a">Talagang-talaga! Pagkatapos ng seremonya, ibahagi gamit ang #FordtheoneforYanna para mahanap namin ang iyong mga kuha!</div>
+              <div class="faq-a">Maaaring ibahagi ang inyong mga kuha matapos ang seremonya gamit ang #FORDtheoneforYANNA.
+                 (Lahat po ng may hashtag namin pa capatialize yung FORD at YANNA)</div>
             </div>
           </div>
 
@@ -2653,17 +2665,29 @@ document.addEventListener('DOMContentLoaded', initBlockPhotosFromCloudinary);
     /* ── INFINITE MOVING PHOTO STRIP ── */
     /* ── INFINITE MOVING PHOTO STRIP ── */
 const PHOTOS = [
-  {src: '5.jpeg',  alt: 'Portrait Image',  type: 'portrait'},
-  {src: '6.jpeg',  alt: 'Portrait Image',  type: 'portrait'},
-  {src: '11.jpeg', alt: 'Portrait Image',  type: 'portrait'},
-  {src: '1.jpeg',  alt: 'Landscape Image', type: 'landscape'},
-  {src: '2.jpeg',  alt: 'Landscape Image', type: 'landscape'},
-  {src: '3.jpeg',  alt: 'Landscape Image', type: 'landscape'},
-  {src: '7.jpeg',  alt: 'Landscape Image', type: 'landscape'},
-  {src: '8.jpeg',  alt: 'Landscape Image', type: 'landscape'},
-  {src: '9.jpeg',  alt: 'Landscape Image', type: 'landscape'},
-  {src: '10.jpeg', alt: 'Landscape Image', type: 'landscape'},
-  {src: '12.jpeg', alt: 'Landscape Image', type: 'landscape'},
+  {src: '1.jpg',  alt: 'Portrait Image',  type: 'portrait'},
+  {src: '4.jpg',  alt: 'Portrait Image',  type: 'landscape'},
+  {src: '19.jpg', alt: 'Portrait Image',  type: 'portrait'},
+  {src: '5.jpg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '10.jpg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '11.jpg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '_DSC6808.jpg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '9.jpg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '_DSC6553.jpg', alt: 'Landscape Image', type: 'landscape'},
+  {src: '_DSC3226.jpg', alt: 'Landscape Image', type: 'landscape'},
+];
+
+const PHOTOS_REVERSE = [
+  {src: '2.jpg',  alt: 'Portrait Image',  type: 'landscape'},
+  {src: '44.jpg',  alt: 'Landscape Image', type: 'portrait'},
+  {src: '6.jpg',  alt: 'Portrait Image',  type: 'landscape'},
+  {src: '7.jpg',  alt: 'Landscape Image', type: 'landscape'},
+  {src: '8.jpg',  alt: 'Landscape Image', type: 'portrait'},
+  {src: '21.jpg', alt: 'Landscape Image', type: 'portrait'},
+  {src: '17.jpg', alt: 'Portrait Image',  type: 'portrait'},
+  {src: '_DSC3161.jpg', alt: 'Landscape Image', type: 'portrait'},
+  {src: '15.jpg', alt: 'Landscape Image', type: 'portrait'},
+  {src: '16.jpg', alt: 'Landscape Image', type: 'portrait'},
 ];
 
 function initMovingPhotoStrip() {
@@ -2674,8 +2698,11 @@ function initMovingPhotoStrip() {
   // Loop through each track and populate it
   tracks.forEach(track => {
     track.innerHTML = '';
+
+    // Use reverse photo set for the reverse-direction strip
+    const photoSet = track.classList.contains('reverse') ? PHOTOS_REVERSE : PHOTOS;
     
-    const createItems = () => PHOTOS.map(photo => {
+    const createItems = () => photoSet.map(photo => {
       const div = document.createElement('div');
       div.className = 'photo-strip-item ' + photo.type;
       const img = document.createElement('img');
